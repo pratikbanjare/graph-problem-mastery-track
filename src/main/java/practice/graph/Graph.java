@@ -1,8 +1,7 @@
 
 package practice.graph;
 
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
 
 public class Graph {
 
@@ -75,5 +74,35 @@ public class Graph {
 
     public int getPublicVertex(int v){
         return v+1;
+    }
+
+    public int shortestDistance(int source, int target) {
+        return shortestDistanceInternal(source-1, target-1);
+
+    }
+
+    private int shortestDistanceInternal (int source, int target) {
+        boolean[] visited = new boolean[this.vertices];
+        int[] distance = new int[this.vertices];
+        Arrays.fill(distance, -1);
+
+        Queue<Integer> queue = new ArrayDeque<>();
+        visited[source] = true;
+        queue.add(source);
+        distance[source] = 0;
+        while(!queue.isEmpty()){
+            int current = queue.poll();
+            for (int neighbor : this.edges.get(current)){
+                if (!visited[neighbor]){
+                    queue.add(neighbor);
+                    visited[neighbor] = true;
+                    distance[neighbor] = distance[current] + 1;
+                    if (neighbor == target){
+                        return distance[target];
+                    }
+                }
+            }
+        }
+        return -1;
     }
 }
