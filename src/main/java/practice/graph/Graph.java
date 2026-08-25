@@ -86,4 +86,19 @@ public class Graph {
         }
 
     }
+    public void dfs(int vertex, boolean[] visited) {
+        dfsInternal(vertex-1, visited);
+    }
+
+    public int countConnectedComponents(){
+        int count = 0;
+        boolean[] visited = new boolean[this.vertices];
+        for (int i = 1; i<= this.vertices; ++i){
+            if (!visited[i-1]){
+                dfs(i,visited);
+                count++;
+            }
+        }
+        return count;
+    }
 }
