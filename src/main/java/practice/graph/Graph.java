@@ -1,8 +1,10 @@
 
 package practice.graph;
 
+import java.util.ArrayDeque;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Queue;
 
 public class Graph {
 
@@ -77,28 +79,36 @@ public class Graph {
         return v+1;
     }
 
-    public void dfsInternal(int vertex, boolean[] visited) {
-        if (visited[vertex]) return;
-        visited[vertex] = true;
-//        System.out.print(getPublicVertex(vertex) + " ");
-        for (int neighbor : this.edges.get(vertex)) {
-            dfsInternal(neighbor ,visited);
-        }
+    public void connectedComponent() {
 
-    }
-    public void dfs(int vertex, boolean[] visited) {
-        dfsInternal(vertex-1, visited);
-    }
-
-    public int countConnectedComponents(){
-        int count = 0;
         boolean[] visited = new boolean[this.vertices];
-        for (int i = 1; i<= this.vertices; ++i){
-            if (!visited[i-1]){
-                dfs(i,visited);
-                count++;
+        for (int i = 1; i<=this.vertices; ++i){
+            if (visited[i-1]){
+                continue;;
+            }
+            System.out.println();
+            bfs(i, visited);
+        }
+    }
+
+    public void bfs(int node, boolean[] visited){
+        bfsInternal(node-1, visited);
+    }
+
+    public void bfsInternal(int node, boolean[] visited){
+        Queue<Integer> queue = new ArrayDeque<Integer>();
+
+        visited[node] = true;
+        queue.add(node);
+        while(!queue.isEmpty()){
+            int current = queue.poll();
+            System.out.print(getPublicVertex(current) + " ");
+            for (int neighbor : this.edges.get(current)){
+                if (!visited[neighbor]){
+                    visited[neighbor] = true;
+                    queue.add(neighbor);
+                }
             }
         }
-        return count;
     }
 }
