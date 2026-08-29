@@ -25,7 +25,7 @@ public class Graph {
     }
 
     void addEdge(int u, int v) {
-        if (validateVertex(u) || validateVertex(v)){
+        if (!validateVertex(u) || !validateVertex(v)){
             throw new IllegalArgumentException("Invalid Vertex");
         }
         if (edges.get(u-1).contains(v-1)){
