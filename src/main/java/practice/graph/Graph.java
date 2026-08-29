@@ -76,6 +76,65 @@ public class Graph {
         return v+1;
     }
 
+
+    public List<Integer> shortestDistancePath(int source, int target){
+
+        int[] parent =  shortestDistancePathInternal(source-1, target-1);
+
+        return tracePath(source-1, target-1, parent);
+
+    }
+
+    public int[] shortestDistancePathInternal(int source, int target) {
+        boolean[] visited = new boolean[this.vertices];
+        int[] parent = new int[this.vertices];
+        Arrays.fill(parent, -1);
+        Queue<Integer> queue = new ArrayDeque<>();
+
+        if (source == target) {
+            return parent;
+        }
+
+        queue.add(source);
+        visited[source] = true;
+
+        while(!queue.isEmpty()){
+            int current = queue.poll();
+            for (int neighbor : this.edges.get(current)){
+                if( !visited[neighbor]){
+                    parent[neighbor] = current;
+                    visited[neighbor] = true;
+                    if (neighbor == target){
+                        return parent;
+                    }
+
+                    queue.add(neighbor);
+                }
+            }
+
+        }
+        return parent;
+
+    }
+
+    private List<Integer> tracePath (int source, int target, int[] parent){
+
+        if (source == target){
+            return List.of(getPublicVertex(source));
+        }
+        if (parent[target] == -1) {
+            return Collections.emptyList();
+        }
+        int current = target;
+        List<Integer> res = new ArrayList<>();
+        while (current != -1)  {
+            res.add(getPublicVertex(current));
+            current = parent[current];
+        }
+        Collections.reverse(res);
+        return res;
+    }
+
     public int shortestDistance(int source, int target) {
         return shortestDistanceInternal(source-1, target-1);
 
