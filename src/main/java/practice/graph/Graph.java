@@ -18,8 +18,20 @@ public class Graph {
         }
     }
 
+    public int getVertexCount() {
+        return this.vertices;
+    }
 
-    private boolean validateVertex(int v){
+    public List<List<Integer>> getEdges() {
+        return this.edges;
+    }
+
+    public List<Integer> getEdgesOfVertex(int vertex) {
+        if (!this.validateVertex(vertex+1)) throw new IllegalArgumentException("Invalid Vertex");
+        return this.edges.get(vertex);
+    }
+
+    public boolean validateVertex(int v){
         return (v >= 1 && v <= this.vertices);
 
     }
@@ -33,7 +45,7 @@ public class Graph {
             return;
         }
         this.edges.get(u-1).add(v-1);
-        this.edges.get(v-1).add(u-1);
+//        this.edges.get(v-1).add(u-1);
     }
 
     boolean hasEdge(int u, int v) {
