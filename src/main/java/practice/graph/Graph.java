@@ -38,9 +38,11 @@ public class Graph {
         if (!this.validateVertex(vertex+1)) throw new IllegalArgumentException("Invalid Vertex");
         return this.edges.get(vertex);
     }
+
     public int getVertices() {
         return this.vertices;
     }
+
     public boolean validateVertex(int v){
         return (v >= 1 && v <= this.vertices);
 
