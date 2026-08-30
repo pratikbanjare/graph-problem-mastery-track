@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import practice.Exception.GraphException;
 import practice.model.GraphType;
+import org.junit.jupiter.api.TestInstance;
+import practice.Exception.GraphException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -44,9 +46,6 @@ public class TopologlcaSortAlgorithmTest {
         graph.addEdge(1,3);
         graph.addEdge(2,4);
         graph.addEdge(4,1);
-
-        TopologicalSortAlgorithm algo = new TopologicalSortAlgorithm();
-
         Assertions.assertThrows(IllegalArgumentException.class, ()->algo.dfsTopologicalSort(graph));
 
     }
