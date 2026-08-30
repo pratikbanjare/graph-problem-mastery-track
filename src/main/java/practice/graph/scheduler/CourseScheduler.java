@@ -15,7 +15,7 @@ public class CourseScheduler {
     6. processed == numCourses → true
        otherwise → false
      */
-    public boolean canFinish(int numCourses, int[][] prerequisites) {
+    public List<Integer> canFinish(int numCourses, int[][] prerequisites) {
 
         List<List<Integer>> adjacencyList = new ArrayList<>();
         int[] inDegree = new int[numCourses];
@@ -44,7 +44,7 @@ public class CourseScheduler {
         }
 
         // BFS to find if courses completion is possible or not ?
-        int processedCourses = 0;
+        List<Integer> completionOrder = new ArrayList<>();
         while (!queue.isEmpty()){
             int vertex = queue.poll();
             for (Integer neighbor : adjacencyList.get(vertex)){
@@ -53,8 +53,11 @@ public class CourseScheduler {
                     queue.add(neighbor);
                 }
             }
-            processedCourses++;
+            completionOrder.add(vertex);
         }
-        return numCourses == processedCourses;
+        if (numCourses == completionOrder.size()){
+            return completionOrder;
+        }
+        return null;
     }
 }

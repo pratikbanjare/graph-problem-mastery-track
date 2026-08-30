@@ -13,6 +13,6 @@ public class CourseSchedulerTest {
                 {1,0},{2,1},{3,2}
         };
 
-        Assertions.assertTrue(courseScheduler.canFinish(numCourses, prerequisites));
+        Assertions.assertNotNull(courseScheduler.canFinish(numCourses, prerequisites));
     }
 }
