@@ -7,16 +7,29 @@ import java.util.ArrayList;
 
 public class Graph {
 
-    private final int vertices;
+    private int vertices;
     private List<List<WeightedEdge>> edges;
 
-    Graph(int vertices) {
+    public Graph(int vertices) {
         if (vertices <= 0) throw new IllegalArgumentException("Invalid Vertices");
         this.vertices = vertices;
         edges = new ArrayList<>();
         for (int i = 0; i< this.vertices; ++i) {
             this.edges.add(new ArrayList<>());
         }
+    }
+
+    public int getNumberOfVertex() {
+        return this.vertices;
+    }
+
+    public List<List<WeightedEdge>> getEdges() {
+        return this.edges;
+    }
+
+    public List<WeightedEdge> getEdgesOfVertex(int vertex) {
+        if (!validateVertex(vertex)) throw new IllegalArgumentException("Invalid Vertex");
+        return this.edges.get(getVertexPos(vertex));
     }
 
     private boolean validateVertex(int v){
@@ -27,7 +40,7 @@ public class Graph {
         return v-1;
     }
 
-    void addEdge(int u, int v, int weight) {
+    public void addEdge(int u, int v, int weight) {
         if (!validateVertex(u) || !validateVertex(v)){
             throw new IllegalArgumentException("Invalid Vertex");
         }
