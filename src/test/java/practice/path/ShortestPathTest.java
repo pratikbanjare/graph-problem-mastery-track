@@ -26,7 +26,7 @@ public class ShortestPathTest {
         graph.addEdge(1,3,1);
         graph.addEdge(3,2,1);
 
-        int[] distance = shortestPath.dijstra(graph, 1);
+        int[] distance = shortestPath.djikstra(graph, 1);
         Assertions.assertEquals(2, distance[2]);
     }
 
