@@ -19,12 +19,14 @@ public class BellmanFord implements IShortestPath{
         Arrays.fill(distance, Integer.MAX_VALUE);
         distance[source] = 0;
         int pass = 1;
+        boolean completedAllAPss = true;
         for (; pass < graph.getNumberOfVertex(); ++pass){
             if(!edgeRelaxation(graph, distance, false)){
+                completedAllAPss = false;
                 break;
             }
         }
-        if (pass == graph.getNumberOfVertex()){
+        if (completedAllAPss){
             edgeRelaxation(graph, distance, true);
         }
         return distance;
