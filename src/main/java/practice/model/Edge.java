@@ -14,23 +14,12 @@ public class Edge {
         return from;
     }
 
-    public void setFrom(int from) {
-        this.from = from;
-    }
 
     public int getTo() {
         return to;
     }
 
-    public void setTo(int to) {
-        this.to = to;
-    }
-
     public double getWeight() {
         return weight;
-    }
-
-    public void setWeight(double weight) {
-        this.weight = weight;
     }
 }
