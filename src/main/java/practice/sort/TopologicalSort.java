@@ -29,7 +29,7 @@ public class TopologicalSort {
     private void sortInterval(Graph graph, int vertex, int[] state, List<Integer> sortedData) {
         state[vertex] = 1;
 
-        for (WeightedEdge weightedEdge : graph.getEdgesOfVertex(vertex)) {
+        for (WeightedEdge weightedEdge : graph.getAdjacencyListOfVertex(vertex)) {
 
             if (state[weightedEdge.getTo()] == 1) {
                 throw new GraphException("Cycle detected when performing topological sort");

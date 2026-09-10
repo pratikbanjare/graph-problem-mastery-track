@@ -36,7 +36,7 @@ public class BellmanFord implements IShortestPath{
     private boolean edgeRelaxation(Graph graph, int[] distance, boolean throwException) throws GraphException {
         boolean change = false;
         for (int  vertex = 1; vertex <= graph.getNumberOfVertex(); ++vertex){
-            for (WeightedEdge weightedEdge : graph.getEdgesOfVertex(vertex)){
+            for (WeightedEdge weightedEdge : graph.getAdjacencyListOfVertex(vertex)){
                 int weight = weightedEdge.getWeight();
                 int neighbor = weightedEdge.getTo();
 

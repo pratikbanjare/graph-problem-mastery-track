@@ -42,7 +42,7 @@ public class FlyodWarshall {
         }
 
         for (int vertex = 1; vertex<= graph.getNumberOfVertex(); ++vertex){
-            for (WeightedEdge weightedEdge : graph.getEdgesOfVertex(vertex)){
+            for (WeightedEdge weightedEdge : graph.getAdjacencyListOfVertex(vertex)){
                 distance[vertex][weightedEdge.getTo()] = Math.min(
                         distance[vertex][weightedEdge.getTo()],
                         weightedEdge.getWeight()

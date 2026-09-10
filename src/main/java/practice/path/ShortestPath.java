@@ -62,7 +62,7 @@ public class ShortestPath {
                 return distance;
             }
 
-            for (WeightedEdge neighbor : graph.getEdgesOfVertex(entry.getVertex())){
+            for (WeightedEdge neighbor : graph.getAdjacencyListOfVertex(entry.getVertex())){
                 // Relaxation
                 int d = neighbor.getWeight() + distance[entry.getVertex()];
                 if (d < distance[neighbor.getTo()]){
@@ -76,7 +76,7 @@ public class ShortestPath {
     }
 
     public void validateGraph(Graph graph)  {
-        graph.getEdges().stream().flatMap(Collection::stream).forEach(weightedEdge -> {
+        graph.getAdjacencyEdges().stream().flatMap(Collection::stream).forEach(weightedEdge -> {
             if (weightedEdge.getWeight() < 0){
                 try {
                     throw new GraphException("Encountered negative weight when parsing Graph using Djikstra's Algorithm");
