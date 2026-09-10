@@ -65,13 +65,13 @@ public class Graph {
             System.out.println("Edge already exists");
             return;
         }
+        this.edges.add(new Edge(u, v, weight));
         if (this.graphType == GraphType.DIRECTED) {
             this.adjacencyEdges.get(getVertexPos(u)).add(new WeightedEdge(v, weight));
-            this.edges.add(new Edge(u, v, weight));
         } else {
             this.adjacencyEdges.get(getVertexPos(u)).add(new WeightedEdge(v, weight));
             this.adjacencyEdges.get(getVertexPos(v)).add(new WeightedEdge(u, weight));
-            this.edges.add(new Edge(u, v, weight));
+
         }
     }
 
