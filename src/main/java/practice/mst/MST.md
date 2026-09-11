@@ -29,3 +29,68 @@ Kruskal's Algo steps
 8. Decide what to do if fewer than V - 1 edges were selected
 ```
 
+## Prim's Algorithm
+
+```text
+        2
+   1 ------- 2
+   | \       |
+  4|  \1     |3
+   |   \     |
+   3 ------- 4
+        1
+```
+
+Fundamental Idea
+- "I already have a tree. What is the cheapest edge that connects my tree to a vertex outside it?"
+
+Algorithm
+```text
+start vertex
+    ↓
+mark visited
+    ↓
+add its edges to min-PQ
+    ↓
+while PQ not empty
+    ↓
+poll cheapest edge
+    ↓
+destination visited?
+  yes → skip
+  no  → accept
+          ↓
+       mark visited
+          ↓
+       add its edges to PQ
+          ↓
+       V - 1 edges?
+       yes → done
+       no  → continue
+    ↓
+PQ empty before V - 1?
+    ↓
+throw exception
+```
+
+
+```text
+start = 1
+visited[start] = true
+
+Add every edge from start to the PriorityQueue
+
+while PQ is not empty:
+
+    edge = PQ.poll()
+
+    if edge.to is already visited:
+        skip it
+
+    otherwise:
+        accept edge
+        mark edge.to as visited
+        add all edges from edge.to to PQ
+
+    stop when MST contains V - 1 edges
+```
