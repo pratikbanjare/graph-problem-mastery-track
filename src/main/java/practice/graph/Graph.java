@@ -117,4 +117,14 @@ public class Graph {
         }
         System.out.print("]");
     }
+
+    public static Graph reverse(Graph graph) {
+
+        Graph reversedgraph = new Graph(graph.getNumberOfVertex(),  graph.getGraphType());
+
+        for (Edge edge : graph.getEdges()){
+            reversedgraph.addEdge(edge.getTo(), edge.getFrom(), edge.getWeight());
+        }
+        return reversedgraph;
+    }
 }

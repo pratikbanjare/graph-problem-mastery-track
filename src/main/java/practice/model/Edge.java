@@ -4,9 +4,9 @@ package practice.model;
 public class Edge {
     private int from;
     private int to;
-    private double weight;
+    private int weight;
 
-    public Edge(int from, int to, double weight) {
+    public Edge(int from, int to, int weight) {
         this.from = from;
         this.to = to;
         this.weight = weight;
@@ -21,7 +21,7 @@ public class Edge {
         return to;
     }
 
-    public double getWeight() {
+    public int getWeight() {
         return weight;
     }
 }
