@@ -59,6 +59,9 @@ public class Graph {
         return v-1;
     }
 
+    public void addEdge(int u, int v){
+        this.addEdge(u,v,0);
+    }
     public void addEdge(int u, int v, int weight) {
 
         if (hasEdge(u,v)) {

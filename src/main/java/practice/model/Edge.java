@@ -12,6 +12,10 @@ public class Edge {
         this.weight = weight;
     }
 
+    public Edge(int from, int to){
+        this(from, to, 0);
+    }
+
     public int getFrom() {
         return from;
     }
