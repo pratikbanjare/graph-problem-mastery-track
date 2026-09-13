@@ -36,7 +36,8 @@ class GraphTest {
         graph.addEdge(1, 2);
         graph.addEdge(1, 2);
 
-        assertEquals("1 2 ", captureOutput(() -> graph.bfs(1, new boolean[2])));
+        ConnectedComponents connectedComponents = new ConnectedComponents(2);
+        assertEquals("1 2 ", captureOutput(() -> connectedComponents.bfs(graph, 1, new boolean[2])));
     }
 
     @Test
@@ -67,7 +68,8 @@ class GraphTest {
         graph.addEdge(1, 3);
         graph.addEdge(2, 4);
 
-        assertEquals("1 2 3 4 ", captureOutput(() -> graph.bfs(1, new boolean[4])));
+        ConnectedComponents connectedComponents = new ConnectedComponents(4);
+        assertEquals("1 2 3 4 ", captureOutput(() -> connectedComponents.bfs(graph, 1, new boolean[4])));
     }
 
     @Test
@@ -76,7 +78,8 @@ class GraphTest {
         graph.addEdge(1, 2);
         graph.addEdge(3, 4);
 
-        String output = captureOutput(graph::connectedComponent);
+        ConnectedComponents connectedComponents = new ConnectedComponents(4);
+        String output = captureOutput(() -> connectedComponents.connectedComponent(graph));
 
         assertTrue(output.contains("\n1 2 "));
         assertTrue(output.contains("\n3 4 "));
