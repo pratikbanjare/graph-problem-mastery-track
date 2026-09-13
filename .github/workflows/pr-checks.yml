@@ -55,7 +55,7 @@ jobs:
         uses: github/codeql-action/analyze@v3
 
   build:
-    name: Build & Package JAR
+    name: Build, Test Coverage (>=80%) & Package JAR
     runs-on: ubuntu-latest
     needs: [code-quality, security]
     steps:
@@ -69,8 +69,15 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      - name: Build and run tests
+      - name: Build, run tests, and enforce coverage threshold
         run: mvn -B clean verify
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-coverage-report
+          path: target/site/jacoco/
 
       - name: Package JAR (main, sources, javadoc)
         run: mvn -B package -DskipTests
