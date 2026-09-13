@@ -83,7 +83,7 @@ public class Graph {
         boolean[] visited = new boolean[this.vertices];
         for (int i = 1; i<=this.vertices; ++i){
             if (visited[i-1]){
-                continue;;
+                continue;
             }
             System.out.println();
             bfs(i, visited);
