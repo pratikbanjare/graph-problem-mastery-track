@@ -77,6 +77,10 @@ public class Graph {
         return v+1;
     }
 
+    int getVerticesCount() {
+        return this.vertices;
+    }
+
     List<Integer> getNeighbors(int v) {
         return this.edges.get(v);
     }

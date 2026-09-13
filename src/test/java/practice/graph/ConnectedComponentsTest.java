@@ -2,11 +2,9 @@ package practice.graph;
 
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ConnectedComponentsTest {
 
@@ -17,8 +15,8 @@ class ConnectedComponentsTest {
         graph.addEdge(1, 3);
         graph.addEdge(2, 4);
 
-        ConnectedComponents connectedComponents = new ConnectedComponents(4);
-        assertEquals("1 2 3 4 ", captureOutput(() -> connectedComponents.bfs(graph, 1, new boolean[4])));
+        ConnectedComponents connectedComponents = new ConnectedComponents();
+        assertEquals(List.of(1, 2, 3, 4), connectedComponents.bfs(graph, 1, new boolean[4]));
     }
 
     @Test
@@ -27,22 +25,13 @@ class ConnectedComponentsTest {
         graph.addEdge(1, 2);
         graph.addEdge(3, 4);
 
-        ConnectedComponents connectedComponents = new ConnectedComponents(4);
-        String output = captureOutput(() -> connectedComponents.connectedComponent(graph));
-
-        assertTrue(output.contains("\n1 2 "));
-        assertTrue(output.contains("\n3 4 "));
-    }
-
-    private String captureOutput(Runnable action) {
-        PrintStream originalOut = System.out;
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(output));
-        try {
-            action.run();
-            return output.toString();
-        } finally {
-            System.setOut(originalOut);
-        }
+        ConnectedComponents connectedComponents = new ConnectedComponents();
+        assertEquals(
+                List.of(
+                        List.of(1, 2),
+                        List.of(3, 4)
+                ),
+                connectedComponents.connectedComponent(graph)
+        );
     }
 }
