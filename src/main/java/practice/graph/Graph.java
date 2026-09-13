@@ -24,7 +24,7 @@ public class Graph {
     }
 
     void addEdge(int u, int v) {
-        if (validateVertex(u) || validateVertex(v)){
+        if (!validateVertex(u) || !validateVertex(v)){
             throw new IllegalArgumentException("Invalid Vertex");
         }
         if (edges.get(u-1).contains(v-1)){
@@ -36,14 +36,14 @@ public class Graph {
     }
 
     boolean hasEdge(int u, int v) {
-        if (validateVertex(u) || validateVertex(v)) {
+        if (!validateVertex(u) || !validateVertex(v)) {
             throw new IllegalArgumentException("Invalid Vertex");
         }
         return this.edges.get(u-1).contains(v-1);
     }
 
     void removeEdge(int u, int v) {
-        if (validateVertex(u) || validateVertex(v)) {
+        if (!validateVertex(u) || !validateVertex(v)) {
             throw new IllegalArgumentException("Invalid Vertex");
         }
         List<Integer> e1 = edges.get(u-1);
@@ -74,6 +74,14 @@ public class Graph {
 
     public int getPublicVertex(int v){
         return v+1;
+    }
+
+    int getVerticesCount() {
+        return this.vertices;
+    }
+
+    List<Integer> getNeighbors(int v) {
+        return this.edges.get(v);
     }
 
 
