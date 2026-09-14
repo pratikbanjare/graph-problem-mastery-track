@@ -1,8 +1,10 @@
-package practice.graph;
+package practice.graph.bdd;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import practice.graph.ConnectedComponents;
+import practice.graph.Graph;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +37,7 @@ public class ConnectedComponentsSteps {
         for (List<String> row : dataTable.asLists()) {
             List<Integer> component = new ArrayList<>();
             for (String cell : row) {
-                if (!cell.isBlank()) {
+                if (cell !=null &&!cell.isBlank()) {
                     component.add(Integer.parseInt(cell));
                 }
             }

@@ -8,7 +8,7 @@ public class Graph {
     private final int vertices;
     private List<List<Integer>> edges;
 
-    Graph(int vertices) {
+    public Graph(int vertices) {
         if (vertices <= 0) throw new IllegalArgumentException("Invalid Vertices");
         this.vertices = vertices;
         edges = new ArrayList<>();
@@ -23,7 +23,7 @@ public class Graph {
 
     }
 
-    void addEdge(int u, int v) {
+    public void addEdge(int u, int v) {
         if (!validateVertex(u) || !validateVertex(v)){
             throw new IllegalArgumentException("Invalid Vertex");
         }

@@ -7,7 +7,7 @@ import java.util.Queue;
 
 public class ConnectedComponents {
 
-    List<List<Integer>> connectedComponent(Graph graph) {
+    public List<List<Integer>> connectedComponent(Graph graph) {
         List<List<Integer>> components = new ArrayList<>();
         boolean[] visited = new boolean[graph.getVerticesCount()];
         for (int i = 1; i <= graph.getVerticesCount(); ++i) {
