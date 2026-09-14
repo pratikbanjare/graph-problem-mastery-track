@@ -1,7 +1,8 @@
 
 package practice.graph;
 
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Graph {
 
@@ -17,8 +18,19 @@ public class Graph {
         }
     }
 
+    public int getVertices() {
+        return this.vertices;
+    }
 
-    private boolean validateVertex(int v){
+    public List<List<Integer>> getEdges() {
+        return this.edges;
+    }
+
+    public List<Integer> getEdgesOfVertex(int v){
+        return this.edges.get(v);
+    }
+
+    protected boolean validateVertex(int v){
         return (v >= 1 && v <= this.vertices);
 
     }
@@ -35,14 +47,14 @@ public class Graph {
         this.edges.get(v-1).add(u-1);
     }
 
-    boolean hasEdge(int u, int v) {
+    public boolean hasEdge(int u, int v) {
         if (!validateVertex(u) || !validateVertex(v)) {
             throw new IllegalArgumentException("Invalid Vertex");
         }
         return this.edges.get(u-1).contains(v-1);
     }
 
-    void removeEdge(int u, int v) {
+    public void removeEdge(int u, int v) {
         if (!validateVertex(u) || !validateVertex(v)) {
             throw new IllegalArgumentException("Invalid Vertex");
         }
@@ -62,7 +74,7 @@ public class Graph {
 
     }
 
-    void printGraph() {
+    public void printGraph() {
         for (int i = 0; i< this.vertices; ++i){
             System.out.println();
             System.out.print("For vertex " + i+1 + "neighbors are -[ ");
