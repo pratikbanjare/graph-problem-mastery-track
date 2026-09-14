@@ -8,7 +8,7 @@ Feature: Find connected components in an undirected graph
     When I find the connected components
     Then the connected components should be
       | 1 | 2 | 3 |
-      | 4 | 5 |
+      | 4 | 5 |   |
 
   Scenario: Graph with isolated vertices
     Given a graph with 3 vertices
