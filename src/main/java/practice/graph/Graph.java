@@ -9,7 +9,7 @@ public class Graph {
     private final int vertices;
     private List<List<Integer>> edges;
 
-    Graph(int vertices) {
+    public Graph(int vertices) {
         if (vertices <= 0) throw new IllegalArgumentException("Invalid Vertices");
         this.vertices = vertices;
         edges = new ArrayList<>();
@@ -25,18 +25,22 @@ public class Graph {
     public List<List<Integer>> getEdges() {
         return this.edges;
     }
+    public int getVertices() {
+        return this.vertices;
+    }
+
 
     public List<Integer> getEdgesOfVertex(int vertex) {
         if (!this.validateVertex(vertex+1)) throw new IllegalArgumentException("Invalid Vertex");
         return this.edges.get(vertex);
     }
 
-    public boolean validateVertex(int v){
+    protected boolean validateVertex(int v){
         return (v >= 1 && v <= this.vertices);
 
     }
 
-    void addEdge(int u, int v) {
+    public void addEdge(int u, int v) {
         if (!validateVertex(u) || !validateVertex(v)){
             throw new IllegalArgumentException("Invalid Vertex");
         }
@@ -45,18 +49,18 @@ public class Graph {
             return;
         }
         this.edges.get(u-1).add(v-1);
-//        this.edges.get(v-1).add(u-1);
+        this.edges.get(v-1).add(u-1);
     }
 
-    boolean hasEdge(int u, int v) {
-        if (validateVertex(u) || validateVertex(v)) {
+    public boolean hasEdge(int u, int v) {
+        if (!validateVertex(u) || !validateVertex(v)) {
             throw new IllegalArgumentException("Invalid Vertex");
         }
         return this.edges.get(u-1).contains(v-1);
     }
 
-    void removeEdge(int u, int v) {
-        if (validateVertex(u) || validateVertex(v)) {
+    public void removeEdge(int u, int v) {
+        if (!validateVertex(u) || !validateVertex(v)) {
             throw new IllegalArgumentException("Invalid Vertex");
         }
         List<Integer> e1 = edges.get(u-1);
@@ -75,7 +79,7 @@ public class Graph {
 
     }
 
-    void printGraph() {
+    public void printGraph() {
         for (int i = 0; i< this.vertices; ++i){
             System.out.println();
             System.out.print("For vertex " + i+1 + "neighbors are -[ ");
@@ -83,6 +87,15 @@ public class Graph {
             neighbors.forEach( j -> System.out.print(j+1 + " "));
         }
         System.out.print("]");
+    }
+
+
+    public int getVerticesCount() {
+        return this.vertices;
+    }
+
+    public List<Integer> getNeighbors(int v) {
+        return this.edges.get(v);
     }
 
     public int getPublicVertex(int v){
