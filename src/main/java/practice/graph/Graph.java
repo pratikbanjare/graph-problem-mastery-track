@@ -9,7 +9,7 @@ public class Graph {
     private final int vertices;
     private List<List<Integer>> edges;
 
-    Graph(int vertices) {
+    public Graph(int vertices) {
         if (vertices <= 0) throw new IllegalArgumentException("Invalid Vertices");
         this.vertices = vertices;
         edges = new ArrayList<>();
@@ -48,14 +48,14 @@ public class Graph {
     }
 
     public boolean hasEdge(int u, int v) {
-        if (validateVertex(u) || validateVertex(v)) {
+        if (!validateVertex(u) || !validateVertex(v)) {
             throw new IllegalArgumentException("Invalid Vertex");
         }
         return this.edges.get(u-1).contains(v-1);
     }
 
     public void removeEdge(int u, int v) {
-        if (validateVertex(u) || validateVertex(v)) {
+        if (!validateVertex(u) || !validateVertex(v)) {
             throw new IllegalArgumentException("Invalid Vertex");
         }
         List<Integer> e1 = edges.get(u-1);
@@ -86,5 +86,13 @@ public class Graph {
 
     public int getPublicVertex(int v){
         return v+1;
+    }
+
+    public int getVerticesCount() {
+        return this.vertices;
+    }
+
+    public List<Integer> getNeighbors(int v) {
+        return this.edges.get(v);
     }
 }
