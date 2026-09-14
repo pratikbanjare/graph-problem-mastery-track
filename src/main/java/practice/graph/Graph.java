@@ -44,17 +44,17 @@ public class Graph {
             return;
         }
         this.edges.get(u-1).add(v-1);
-//        this.edges.get(v-1).add(u-1);
+        this.edges.get(v-1).add(u-1);
     }
 
-    boolean hasEdge(int u, int v) {
+    public boolean hasEdge(int u, int v) {
         if (!validateVertex(u) || !validateVertex(v)) {
             throw new IllegalArgumentException("Invalid Vertex");
         }
         return this.edges.get(u-1).contains(v-1);
     }
 
-    void removeEdge(int u, int v) {
+    public void removeEdge(int u, int v) {
         if (!validateVertex(u) || !validateVertex(v)) {
             throw new IllegalArgumentException("Invalid Vertex");
         }
@@ -74,7 +74,7 @@ public class Graph {
 
     }
 
-    void printGraph() {
+    public void printGraph() {
         for (int i = 0; i< this.vertices; ++i){
             System.out.println();
             System.out.print("For vertex " + i+1 + "neighbors are -[ ");
