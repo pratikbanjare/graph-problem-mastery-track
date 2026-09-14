@@ -1,15 +1,14 @@
 
 package practice.graph;
 
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
 
 public class Graph {
 
     private final int vertices;
     private List<List<Integer>> edges;
 
-    Graph(int vertices) {
+    public Graph(int vertices) {
         if (vertices <= 0) throw new IllegalArgumentException("Invalid Vertices");
         this.vertices = vertices;
         edges = new ArrayList<>();
@@ -36,7 +35,7 @@ public class Graph {
 
     }
 
-    void addEdge(int u, int v) {
+    public void addEdge(int u, int v) {
         if (!validateVertex(u) || !validateVertex(v)){
             throw new IllegalArgumentException("Invalid Vertex");
         }
@@ -89,12 +88,11 @@ public class Graph {
         return v+1;
     }
 
-    int getVerticesCount() {
+    public int getVerticesCount() {
         return this.vertices;
     }
 
-    List<Integer> getNeighbors(int v) {
+    public List<Integer> getNeighbors(int v) {
         return this.edges.get(v);
     }
-
 }
