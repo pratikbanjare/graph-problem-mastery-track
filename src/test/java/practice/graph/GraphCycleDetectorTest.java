@@ -14,7 +14,7 @@ public class GraphCycleDetectorTest {
         graph.addEdge(3,1);
 
         GraphCycleDetector detector = new GraphCycleDetector();
-        Assertions.assertTrue(detector.dfsCycle(graph));
+        Assertions.assertTrue(detector.cycleDetector(graph));
     }
 
 //    @Test
@@ -28,7 +28,7 @@ public class GraphCycleDetectorTest {
 
         // TODO - assertion here is correct. However Graph objects needs modification before we actually fix this test. That will happen at later point of time, when other branches gets merged.
         GraphCycleDetector detector = new GraphCycleDetector();
-        Assertions.assertFalse(detector.dfsCycle(graph));
+        Assertions.assertFalse(detector.cycleDetector(graph));
     }
 
 }
