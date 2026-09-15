@@ -3,6 +3,7 @@ package practice.graph;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import practice.model.GraphType;
 import org.junit.jupiter.api.TestInstance;
 import practice.Exception.GraphException;
 import practice.model.GraphType;
