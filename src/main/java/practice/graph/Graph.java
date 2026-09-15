@@ -1,6 +1,8 @@
 
 package practice.graph;
 
+import practice.model.GraphType;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -8,9 +10,15 @@ public class Graph {
 
     private final int vertices;
     private List<List<Integer>> edges;
+    private GraphType graphType;
 
     public Graph(int vertices) {
+        this(vertices, GraphType.UNDIRECTED);
+    }
+
+    public Graph (int vertices, GraphType graphType) {
         if (vertices <= 0) throw new IllegalArgumentException("Invalid Vertices");
+        this.graphType = graphType;
         this.vertices = vertices;
         edges = new ArrayList<>();
         for (int i = 0; i< this.vertices; ++i) {
@@ -47,7 +55,10 @@ public class Graph {
             return;
         }
         this.edges.get(u-1).add(v-1);
-//        this.edges.get(v-1).add(u-1);
+        if (graphType == GraphType.UNDIRECTED) {
+            this.edges.get(v-1).add(u-1);
+        }
+
     }
 
     public boolean hasEdge(int u, int v) {

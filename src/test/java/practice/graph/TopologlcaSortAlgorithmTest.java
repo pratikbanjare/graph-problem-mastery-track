@@ -2,6 +2,7 @@ package practice.graph;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import practice.model.GraphType;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,7 +12,7 @@ public class TopologlcaSortAlgorithmTest {
 
     @Test
     public void testTopologicalOrder() {
-        Graph graph = new Graph(4);
+        Graph graph = new Graph(4, GraphType.DIRECTED);
         graph.addEdge(1, 2);
         graph.addEdge(1,3);
         graph.addEdge(2,4);
@@ -27,7 +28,7 @@ public class TopologlcaSortAlgorithmTest {
 
     @Test
     public void testTopologicalOrder2() {
-        Graph graph = new Graph(4);
+        Graph graph = new Graph(4, GraphType.DIRECTED);
         graph.addEdge(1, 2);
         graph.addEdge(1,3);
         graph.addEdge(2,4);
