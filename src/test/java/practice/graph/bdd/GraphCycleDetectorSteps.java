@@ -7,6 +7,7 @@ import io.cucumber.java.en.When;
 import practice.CommonGraphHelper;
 import practice.graph.Graph;
 import practice.graph.GraphCycleDetector;
+import practice.model.GraphType;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -18,7 +19,7 @@ public class GraphCycleDetectorSteps {
 
     @Given("a graph whose vertex count is {int}")
     public void aGraphWhoseVertexCountIs(int vertices) {
-        graph = helper.createGraph(vertices);
+        graph = helper.createGraph(vertices, GraphType.DIRECTED);
     }
 
     @Given("edges")

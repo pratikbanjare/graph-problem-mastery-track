@@ -1,15 +1,24 @@
 
 package practice.graph;
 
-import java.util.*;
+import practice.model.GraphType;
+
+import java.util.List;
+import java.util.ArrayList;
 
 public class Graph {
 
     private final int vertices;
     private List<List<Integer>> edges;
+    private GraphType graphType;
 
     public Graph(int vertices) {
+        this(vertices, GraphType.UNDIRECTED);
+    }
+
+    public Graph (int vertices, GraphType graphType) {
         if (vertices <= 0) throw new IllegalArgumentException("Invalid Vertices");
+        this.graphType = graphType;
         this.vertices = vertices;
         edges = new ArrayList<>();
         for (int i = 0; i< this.vertices; ++i) {
@@ -20,14 +29,13 @@ public class Graph {
     public int getVertexCount() {
         return this.vertices;
     }
+
     public List<List<Integer>> getEdges() {
         return this.edges;
     }
     public int getVertices() {
         return this.vertices;
     }
-
-
     public List<Integer> getEdgesOfVertex(int vertex) {
         if (!this.validateVertex(vertex+1)) throw new IllegalArgumentException("Invalid Vertex");
         return this.edges.get(vertex);
@@ -47,7 +55,10 @@ public class Graph {
             return;
         }
         this.edges.get(u-1).add(v-1);
-        this.edges.get(v-1).add(u-1);
+        if (graphType == GraphType.UNDIRECTED) {
+            this.edges.get(v-1).add(u-1);
+        }
+
     }
 
     public boolean hasEdge(int u, int v) {
@@ -86,7 +97,6 @@ public class Graph {
         }
         System.out.print("]");
     }
-
     public int getVerticesCount() {
         return this.vertices;
     }

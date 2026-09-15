@@ -2,6 +2,7 @@ package practice;
 
 import io.cucumber.datatable.DataTable;
 import practice.graph.Graph;
+import practice.model.GraphType;
 
 import java.util.List;
 
@@ -9,6 +10,9 @@ public class CommonGraphHelper {
 
     public Graph createGraph(int vertices) {
         return new Graph(vertices);
+    }
+    public Graph createGraph(int vertices, GraphType graphType) {
+        return new Graph(vertices, graphType);
     }
 
     public void addEdges(Graph graph, DataTable dataTable) {
