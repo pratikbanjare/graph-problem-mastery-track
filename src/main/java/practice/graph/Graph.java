@@ -1,6 +1,8 @@
 
 package practice.graph;
 
+import practice.model.GraphType;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -8,9 +10,15 @@ public class Graph {
 
     private final int vertices;
     private List<List<Integer>> edges;
+    private GraphType graphType;
 
-    Graph(int vertices) {
+    public Graph(int vertices) {
+        this(vertices, GraphType.UNDIRECTED);
+    }
+
+    public Graph (int vertices, GraphType graphType) {
         if (vertices <= 0) throw new IllegalArgumentException("Invalid Vertices");
+        this.graphType = graphType;
         this.vertices = vertices;
         edges = new ArrayList<>();
         for (int i = 0; i< this.vertices; ++i) {
@@ -30,13 +38,15 @@ public class Graph {
         if (!this.validateVertex(vertex+1)) throw new IllegalArgumentException("Invalid Vertex");
         return this.edges.get(vertex);
     }
-
+    public int getVertices() {
+        return this.vertices;
+    }
     public boolean validateVertex(int v){
         return (v >= 1 && v <= this.vertices);
 
     }
 
-    void addEdge(int u, int v) {
+    public void addEdge(int u, int v) {
         if (!validateVertex(u) || !validateVertex(v)){
             throw new IllegalArgumentException("Invalid Vertex");
         }
@@ -45,18 +55,21 @@ public class Graph {
             return;
         }
         this.edges.get(u-1).add(v-1);
-//        this.edges.get(v-1).add(u-1);
+        if (graphType == GraphType.UNDIRECTED) {
+            this.edges.get(v-1).add(u-1);
+        }
+
     }
 
-    boolean hasEdge(int u, int v) {
-        if (validateVertex(u) || validateVertex(v)) {
+    public boolean hasEdge(int u, int v) {
+        if (!validateVertex(u) || !validateVertex(v)) {
             throw new IllegalArgumentException("Invalid Vertex");
         }
         return this.edges.get(u-1).contains(v-1);
     }
 
-    void removeEdge(int u, int v) {
-        if (validateVertex(u) || validateVertex(v)) {
+    public void removeEdge(int u, int v) {
+        if (!validateVertex(u) || !validateVertex(v)) {
             throw new IllegalArgumentException("Invalid Vertex");
         }
         List<Integer> e1 = edges.get(u-1);
@@ -83,6 +96,13 @@ public class Graph {
             neighbors.forEach( j -> System.out.print(j+1 + " "));
         }
         System.out.print("]");
+    }
+    public int getVerticesCount() {
+        return this.vertices;
+    }
+
+    public List<Integer> getNeighbors(int v) {
+        return this.edges.get(v);
     }
 
     public int getPublicVertex(int v){

@@ -2,12 +2,13 @@ package practice.graph;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import practice.model.GraphType;
 
 public class GraphCycleDetectorTest {
 
     @Test
     public void dfsCycleTest(){
-        Graph graph = new Graph(4);
+        Graph graph = new Graph(4, GraphType.DIRECTED);
         graph.addEdge(1, 2);
         graph.addEdge(2, 3);
         graph.addEdge(3, 4);
@@ -15,19 +16,22 @@ public class GraphCycleDetectorTest {
 
         GraphCycleDetector detector = new GraphCycleDetector();
         Assertions.assertTrue(detector.dfsCycle(graph));
+        Assertions.assertTrue(detector.cycleDetector(graph));
     }
 
     @Test
     public void dfsCycleExistTest2(){
-        Graph graph = new Graph(4);
+        Graph graph = new Graph(4, GraphType.DIRECTED);
         graph.addEdge(1, 2);
         graph.addEdge(2, 3);
         graph.addEdge(3, 4);
         graph.addEdge(1, 3);
 
 
+        // TODO - assertion here is correct. However Graph objects needs modification before we actually fix this test. That will happen at later point of time, when other branches gets merged.
         GraphCycleDetector detector = new GraphCycleDetector();
         Assertions.assertFalse(detector.dfsCycle(graph));
+        Assertions.assertFalse(detector.cycleDetector(graph));
     }
 
 }
