@@ -20,10 +20,13 @@ public class Graph {
     public int getVertexCount() {
         return this.vertices;
     }
-
     public List<List<Integer>> getEdges() {
         return this.edges;
     }
+    public int getVertices() {
+        return this.vertices;
+    }
+
 
     public List<Integer> getEdgesOfVertex(int vertex) {
         if (!this.validateVertex(vertex+1)) throw new IllegalArgumentException("Invalid Vertex");
@@ -84,15 +87,15 @@ public class Graph {
         System.out.print("]");
     }
 
-    public int getPublicVertex(int v){
-        return v+1;
-    }
-
     public int getVerticesCount() {
         return this.vertices;
     }
 
     public List<Integer> getNeighbors(int v) {
         return this.edges.get(v);
+    }
+
+    public int getPublicVertex(int v){
+        return v+1;
     }
 }

@@ -14,7 +14,7 @@ public class GraphCycleDetectorTest {
         graph.addEdge(3,1);
 
         GraphCycleDetector detector = new GraphCycleDetector();
-        Assertions.assertTrue(detector.dfsCycle(graph));
+        Assertions.assertTrue(detector.cycleDetector(graph));
     }
 
     @Test
