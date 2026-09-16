@@ -1,8 +1,5 @@
 package practice.graph;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import practice.Exception.GraphException;
 import java.util.*;
 
@@ -24,7 +21,7 @@ public class TopologicalSortAlgorithm {
         return res;
     }
 
-    public void dfsTopologicalSortInternal(Graph graph, int vertex, int[] state, List<Integer> topologicalOrder){
+    private void dfsTopologicalSortInternal(Graph graph, int vertex, int[] state, List<Integer> topologicalOrder){
 
         state[vertex] = 1;
 
