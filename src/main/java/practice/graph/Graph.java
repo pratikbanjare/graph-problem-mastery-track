@@ -38,11 +38,9 @@ public class Graph {
         if (!this.validateVertex(vertex+1)) throw new IllegalArgumentException("Invalid Vertex");
         return this.edges.get(vertex);
     }
-
     public int getVertices() {
         return this.vertices;
     }
-
     public boolean validateVertex(int v){
         return (v >= 1 && v <= this.vertices);
 
@@ -90,7 +88,7 @@ public class Graph {
 
     }
 
-    public void printGraph() {
+    void printGraph() {
         for (int i = 0; i< this.vertices; ++i){
             System.out.println();
             System.out.print("For vertex " + i+1 + "neighbors are -[ ");

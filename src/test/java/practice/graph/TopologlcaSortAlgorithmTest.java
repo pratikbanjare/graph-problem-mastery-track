@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import practice.Exception.GraphException;
 import practice.model.GraphType;
-import org.junit.jupiter.api.TestInstance;
-import practice.Exception.GraphException;
 
 import java.util.Arrays;
 import java.util.List;
