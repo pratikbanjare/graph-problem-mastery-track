@@ -44,9 +44,6 @@ public class TopologlcaSortAlgorithmTest {
         graph.addEdge(1,3);
         graph.addEdge(2,4);
         graph.addEdge(4,1);
-
-        TopologicalSortAlgorithm algo = new TopologicalSortAlgorithm();
-
         Assertions.assertThrows(IllegalArgumentException.class, ()->algo.dfsTopologicalSort(graph));
 
     }

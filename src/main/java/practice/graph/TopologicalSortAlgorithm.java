@@ -3,7 +3,6 @@ package practice.graph;
 import practice.Exception.GraphException;
 import java.util.*;
 
-
 public class TopologicalSortAlgorithm {
 
     public List<Integer> dfsTopologicalSort(Graph graph) {
