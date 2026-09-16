@@ -2,16 +2,24 @@
 package practice.graph;
 
 import practice.model.WeightedEdge;
+import practice.model.GraphType;
+
 import java.util.List;
 import java.util.ArrayList;
 
 public class Graph {
 
     private int vertices;
+    private GraphType graphType;
     private List<List<WeightedEdge>> edges;
 
     public Graph(int vertices) {
+        this(vertices, GraphType.UNDIRECTED);
+    }
+
+    public Graph (int vertices, GraphType graphType) {
         if (vertices <= 0) throw new IllegalArgumentException("Invalid Vertices");
+        this.graphType = graphType;
         this.vertices = vertices;
         edges = new ArrayList<>();
         for (int i = 0; i< this.vertices; ++i) {
@@ -19,6 +27,9 @@ public class Graph {
         }
     }
 
+    public int getVertexCount() {
+        return this.vertices;
+    }
     public int getNumberOfVertex() {
         return this.vertices;
     }
@@ -32,7 +43,10 @@ public class Graph {
         return this.edges.get(getVertexPos(vertex));
     }
 
-    private boolean validateVertex(int v){
+    public int getVertices() {
+        return this.vertices;
+    }
+    public boolean validateVertex(int v){
         return (v >= 1 && v <= this.vertices);
     }
 
@@ -49,8 +63,11 @@ public class Graph {
             System.out.println("Edge already exists");
             return;
         }
-        this.edges.get(getVertexPos(u)).add(new WeightedEdge(v, weight));
 
+        this.edges.get(getVertexPos(u)).add(new WeightedEdge(v, weight));
+        if (graphType == GraphType.UNDIRECTED) {
+            this.edges.get(getVertexPos(v)).add(new WeightedEdge(u, weight));
+        }
     }
 
     boolean hasEdge(int u, int v) {
@@ -63,8 +80,8 @@ public class Graph {
                 .anyMatch(to -> to == v);
     }
 
-    void removeEdge(int u, int v) {
-        if (validateVertex(u) || validateVertex(v)) {
+    public void removeEdge(int u, int v) {
+        if (!validateVertex(u) || !validateVertex(v)) {
             throw new IllegalArgumentException("Invalid Vertex");
         }
         List<WeightedEdge> e1 = edges.get(getVertexPos(u));
@@ -82,5 +99,16 @@ public class Graph {
             neighbors.forEach( j -> System.out.print("("+ j.getTo() + ", "+ j.getWeight() + ")"));
         }
         System.out.print("]");
+    }
+    public int getVerticesCount() {
+        return this.vertices;
+    }
+
+    public List<WeightedEdge> getNeighbors(int v) {
+        return this.edges.get(v);
+    }
+
+    public int getPublicVertex(int v){
+        return v+1;
     }
 }
