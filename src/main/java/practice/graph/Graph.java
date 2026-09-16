@@ -33,14 +33,14 @@ public class Graph {
     public List<List<Integer>> getEdges() {
         return this.edges;
     }
-    public int getVertices() {
-        return this.vertices;
-    }
+
     public List<Integer> getEdgesOfVertex(int vertex) {
         if (!this.validateVertex(vertex+1)) throw new IllegalArgumentException("Invalid Vertex");
         return this.edges.get(vertex);
     }
-
+    public int getVertices() {
+        return this.vertices;
+    }
     public boolean validateVertex(int v){
         return (v >= 1 && v <= this.vertices);
 
