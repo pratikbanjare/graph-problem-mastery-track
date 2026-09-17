@@ -1,4 +1,4 @@
-package practice.Exception;
+package practice.exception;
 
 public class GraphException extends Exception {
 

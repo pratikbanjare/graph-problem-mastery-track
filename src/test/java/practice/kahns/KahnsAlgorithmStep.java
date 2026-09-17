@@ -7,7 +7,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import practice.Exception.GraphException;
+import practice.exception.GraphException;
 import practice.graph.Graph;
 import practice.graph.TopologicalSortAlgorithm;
 import practice.model.GraphType;

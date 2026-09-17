@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import practice.Exception.GraphException;
+import practice.exception.GraphException;
 import practice.model.GraphType;
 
 import java.util.Arrays;

@@ -9,18 +9,18 @@ public class ConnectedComponents {
 
     public List<List<Integer>> connectedComponent(Graph graph) {
         List<List<Integer>> components = new ArrayList<>();
-        boolean[] visited = new boolean[graph.getVerticesCount()];
+        boolean[] visited = new boolean[graph.getVerticesCount()+1];
         for (int i = 1; i <= graph.getVerticesCount(); ++i) {
-            if (visited[i - 1]) {
+            if (visited[i]) {
                 continue;
             }
-            components.add(bfsInternal(graph, i - 1, visited));
+            components.add(bfsInternal(graph, i, visited));
         }
         return components;
     }
 
     List<Integer> bfs(Graph graph, int node, boolean[] visited) {
-        return bfsInternal(graph, node - 1, visited);
+        return bfsInternal(graph, node, visited);
     }
 
     List<Integer> bfsInternal(Graph graph, int node, boolean[] visited) {
@@ -31,7 +31,7 @@ public class ConnectedComponents {
         queue.add(node);
         while (!queue.isEmpty()) {
             int current = queue.poll();
-            component.add(graph.getPublicVertex(current));
+            component.add(current);
             for (int neighbor : graph.getNeighbors(current)) {
                 if (!visited[neighbor]) {
                     visited[neighbor] = true;

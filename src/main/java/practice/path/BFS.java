@@ -8,15 +8,15 @@ public class BFS {
 
     public List<Integer> shortestDistancePath(Graph graph, int source, int target){
 
-        int[] parent =  shortestDistancePathInternal(graph,source-1, target-1);
+        int[] parent =  shortestDistancePathInternal(graph,source, target);
 
-        return tracePath(graph, source-1, target-1, parent);
+        return tracePath(graph, source, target, parent);
 
     }
 
     public int[] shortestDistancePathInternal(Graph graph, int source, int target) {
-        boolean[] visited = new boolean[graph.getVerticesCount()];
-        int[] parent = new int[graph.getVerticesCount()];
+        boolean[] visited = new boolean[graph.getVerticesCount() + 1];
+        int[] parent = new int[graph.getVerticesCount() + 1];
         Arrays.fill(parent, -1);
         Queue<Integer> queue = new ArrayDeque<>();
 
@@ -49,7 +49,7 @@ public class BFS {
     private List<Integer> tracePath (Graph graph, int source, int target, int[] parent){
 
         if (source == target){
-            return List.of(graph.getPublicVertex(source));
+            return List.of(source);
         }
         if (parent[target] == -1) {
             return Collections.emptyList();
@@ -57,7 +57,7 @@ public class BFS {
         int current = target;
         List<Integer> res = new ArrayList<>();
         while (current != -1)  {
-            res.add(graph.getPublicVertex(current));
+            res.add(current);
             current = parent[current];
         }
         Collections.reverse(res);
@@ -65,13 +65,13 @@ public class BFS {
     }
 
     public int shortestDistance(Graph graph, int source, int target) {
-        return shortestDistanceInternal(graph, source-1, target-1);
+        return shortestDistanceInternal(graph, source, target);
 
     }
 
     private int shortestDistanceInternal (Graph graph, int source, int target) {
-        boolean[] visited = new boolean[graph.getVerticesCount()];
-        int[] distance = new int[graph.getVerticesCount()];
+        boolean[] visited = new boolean[graph.getVerticesCount()+1];
+        int[] distance = new int[graph.getVerticesCount()+1];
         Arrays.fill(distance, -1);
 
         Queue<Integer> queue = new ArrayDeque<>();

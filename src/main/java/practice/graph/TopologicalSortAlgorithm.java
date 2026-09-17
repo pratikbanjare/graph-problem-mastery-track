@@ -1,23 +1,25 @@
 package practice.graph;
 
-import practice.Exception.GraphException;
+import practice.exception.GraphException;
+import practice.model.Edge;
+
 import java.util.*;
 
 public class TopologicalSortAlgorithm {
 
     public List<Integer> dfsTopologicalSort(Graph graph) {
         List<Integer> topologicalOrder = new ArrayList<>();
-        int[] state  = new int[graph.getVertexCount()];
+        int[] state  = new int[graph.getVertexCount()+1];
 
         for (int i = 1; i<= graph.getVertexCount(); i++){
-            if (state[i-1] == 0){
-                dfsTopologicalSortInternal(graph, i-1, state, topologicalOrder);
+            if (state[i] == 0){
+                dfsTopologicalSortInternal(graph, i, state, topologicalOrder);
             }
         }
         Collections.reverse(topologicalOrder);
 
         List<Integer> res = new ArrayList<>();
-        topologicalOrder.forEach( x -> res.add(x+1) );
+        topologicalOrder.forEach( x -> res.add(x) );
         return res;
     }
 
@@ -46,7 +48,7 @@ public class TopologicalSortAlgorithm {
         int [] inDegree = generateIndegreeFrom(graph);
 
         // Add vertex to queue with in degree == 0
-        for (int i = 0; i< graph.getVertexCount(); ++i) {
+        for (int i = 1; i<= graph.getVertexCount(); ++i) {
             if (inDegree[i] == 0){
                 queue.add(i);
             }
@@ -69,18 +71,16 @@ public class TopologicalSortAlgorithm {
         }
 
         List<Integer> res = new ArrayList<>();
-        topologicalOrder.forEach( x -> res.add(x+1) );
+        res.addAll(topologicalOrder);
 
         return res;
     }
 
     private int[] generateIndegreeFrom(Graph graph){
-        int[] inDegree = new int[graph.getVertexCount()];
+        int[] inDegree = new int[graph.getVertexCount()+1];
 
-        for (List<Integer> edge : graph.getEdges()){
-            for (Integer vertex : edge){
-                inDegree[vertex]++;
-            }
+        for (Edge edge : graph.getEdges()){
+            inDegree[edge.getTo()]++;
         }
         return inDegree;
     }
