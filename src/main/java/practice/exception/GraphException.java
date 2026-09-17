@@ -1,8 +1,9 @@
 package practice.exception;
 
-public class GraphException extends Exception{
+public class GraphException extends IllegalArgumentException{
 
     public GraphException(String message){
         super(message);
     }
+
 }

@@ -6,12 +6,12 @@ public class GraphCycleDetector {
 
     public boolean cycleDetector(Graph graph){
 
-        int[] state = new int[graph.getVertexCount()];
-        for (int i = 1; i<=graph.getVertexCount(); ++i){
-            if (state[i-1] == 2){
+        int[] state = new int[graph.getVertexCount() + 1];
+        for (int vertex = 1; vertex <= graph.getVertexCount(); ++vertex){
+            if (state[vertex] == 2){
                 continue;
             }
-            if (cycleDetector(graph, i-1, state)){
+            if (cycleDetector(graph, vertex, state)){
                 return true;
             }
         }
@@ -40,12 +40,12 @@ public class GraphCycleDetector {
     }
     public boolean dfsCycle(Graph graph){
 
-        int[] state = new int[graph.getVertexCount()];
-        for (int i = 1; i<=graph.getVertexCount(); ++i){
-            if (state[i-1] == 2){
+        int[] state = new int[graph.getVertexCount() + 1];
+        for (int vertex = 1; vertex <= graph.getVertexCount(); ++vertex){
+            if (state[vertex] == 2){
                 continue;
             }
-            if (dfsCycle(graph, i-1, state)){
+            if (dfsCycle(graph, vertex, state)){
                 return true;
             }
         }

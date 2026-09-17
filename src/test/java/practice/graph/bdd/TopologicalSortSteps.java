@@ -93,10 +93,10 @@ public class TopologicalSortSteps {
         Assertions.assertNotNull(result, "Topological sort result should not be null.");
 
         for (int source = 1; source <= graph.getVertexCount(); source++) {
-            List<Integer> neighbors = graph.getEdgesOfVertex(source - 1);
+            List<Integer> neighbors = graph.getEdgesOfVertex(source );
 
             for (int neighbor : neighbors) {
-                int target = neighbor + 1;
+                int target = neighbor;
 
                 int sourceIndex = result.indexOf(source);
                 int targetIndex = result.indexOf(target);
