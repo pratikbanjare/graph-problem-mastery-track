@@ -21,6 +21,9 @@ public class ShortestPath {
 
     public List<Integer> djikstraPath(Graph graph, int source, int target){
         validateGraph(graph);
+        if (source == target) {
+            return List.of(source);
+        }
         int[] parent = new int[graph.getNumberOfVertex()+1];
         int[] distance = this.djikstra(graph, source, parent, target);
 
