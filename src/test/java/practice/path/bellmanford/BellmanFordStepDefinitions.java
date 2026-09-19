@@ -34,12 +34,6 @@ public class BellmanFordStepDefinitions {
         this.source = sourceVertex;
     }
 
-    @Given("a directed graph with {int} vertex")
-    public void a_directed_graph_with_single_vertex(int vertexCount) {
-        graph = new Graph(vertexCount, GraphType.DIRECTED);
-        this.source = 1;
-    }
-
     @Given("the following weighted edges:")
     public void the_following_weighted_edges(DataTable dataTable) {
         List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);

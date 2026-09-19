@@ -9,7 +9,7 @@ import practice.model.GraphType;
 public class BellmanFordTest {
 
     @Test
-    public void testBellmanFord(){
+    void testBellmanFord(){
         IShortestPath shortestPath = new BellmanFord();
 
         Graph graph = new Graph(4, GraphType.DIRECTED);

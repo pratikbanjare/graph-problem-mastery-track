@@ -76,7 +76,7 @@ Feature: Bellman-Ford shortest path calculation
     And no exception should be thrown
 
   Scenario: Returns a valid result for a graph with a single vertex
-    Given a directed graph with 1 vertex
+    Given a directed graph with 1 vertices
     And there are no weighted edges in the graph
     When I compute the shortest path from source vertex 1
     Then the distances should be:
