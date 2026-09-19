@@ -21,6 +21,9 @@ public class ShortestPath {
 
     public List<Integer> djikstraPath(Graph graph, int source, int target){
         validateGraph(graph);
+        if (source == target) {
+            return List.of(source);
+        }
         int[] parent = new int[graph.getNumberOfVertex()+1];
         int[] distance = this.djikstra(graph, source, parent, target);
 
@@ -62,7 +65,7 @@ public class ShortestPath {
                 return distance;
             }
 
-            for (WeightedEdge neighbor : graph.getEdgesOfVertex(entry.getVertex())){
+            for (WeightedEdge neighbor : graph.getWeightedEdgesOfVertex(entry.getVertex())){
                 // Relaxation
                 int d = neighbor.getWeight() + distance[entry.getVertex()];
                 if (d < distance[neighbor.getTo()]){
@@ -76,7 +79,7 @@ public class ShortestPath {
     }
 
     public void validateGraph(Graph graph)  {
-        graph.getEdges().stream().flatMap(Collection::stream).forEach(weightedEdge -> {
+        graph.getWeightedAdjacencyList().stream().flatMap(Collection::stream).forEach(weightedEdge -> {
             if (weightedEdge.getWeight() < 0){
                 try {
                     throw new GraphException("Encountered negative weight when parsing Graph using Djikstra's Algorithm");
