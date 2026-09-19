@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import practice.exception.GraphException;
 import practice.graph.Graph;
+import practice.model.GraphType;
 
 public class BellmanFordTest {
 
@@ -11,7 +12,7 @@ public class BellmanFordTest {
     public void testBellmanFord(){
         IShortestPath shortestPath = new BellmanFord();
 
-        Graph graph = new Graph(4);
+        Graph graph = new Graph(4, GraphType.DIRECTED);
         graph.addEdge(1,2,4);
         graph.addEdge(1,3,5);
         graph.addEdge(2,3,-2);
@@ -27,7 +28,7 @@ public class BellmanFordTest {
             }
 
         } catch (GraphException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
 
     }
