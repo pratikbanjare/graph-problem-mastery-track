@@ -18,3 +18,16 @@ Project structure:
 mvn clean test
 mvn -q exec:java -Dexec.mainClass="practice.Main"
 ```
+
+## Connected components BDD
+
+Connected components now have Cucumber BDD coverage in:
+
+- `src/test/resources/features/graph/connected-components.feature`
+- `src/test/java/practice/graph/ConnectedComponentsSteps.java`
+
+Run all unit and BDD tests with:
+
+```bash
+mvn test
+```
