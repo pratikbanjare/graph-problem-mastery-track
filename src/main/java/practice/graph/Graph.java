@@ -8,6 +8,7 @@ import practice.model.GraphType;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Graph {
 
@@ -54,15 +55,15 @@ public class Graph {
 
     public List<Integer> getEdgesOfVertex(int vertex) {
         if (!validateVertex(vertex)) throw new IllegalArgumentException("Invalid Vertex");
-        return this.weightedAdjacencyList.get(getVertexPos(vertex)).stream().map(WeightedEdge::getTo).collect(Collectors.toList());
-    }
-
-    public int getVertices() {
-        return this.vertices;
+        return this.weightedAdjacencyList.get(getVertexPos(vertex)).stream().map(WeightedEdge::getTo).toList();
     }
 
     public GraphType getGraphType() {
         return this.graphType;
+    }
+
+    public int getVertices() {
+        return this.vertices;
     }
 
     public boolean validateVertex(int v) {
@@ -141,7 +142,7 @@ public class Graph {
     }
 
     public List<Integer> getNeighbors(int v) {
-        return this.weightedAdjacencyList.get(getVertexPos(v)).stream().map(WeightedEdge::getTo).collect(Collectors.toList());
+        return this.weightedAdjacencyList.get(getVertexPos(v)).stream().map(WeightedEdge::getTo).toList();
     }
 
     public int getPublicVertex(int v) {

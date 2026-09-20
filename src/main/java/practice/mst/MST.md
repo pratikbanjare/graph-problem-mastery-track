@@ -54,6 +54,75 @@ The implementation in `KruskalAlgorithm.java` applies this process and returns
 the selected edges. It expects vertex identifiers in the range `1` through `V`
 and reports a disconnected graph with an exception.
 
+## Prim's algorithm
+
+Prim's algorithm is another greedy algorithm for finding an MST. Instead of
+sorting every edge in the graph, it grows one tree from a starting vertex.
+At every step, it chooses the lightest edge that crosses from the vertices
+already in the tree to a vertex outside the tree.
+
+The implementation in `PrimsAlgorithm.java` starts with vertex `1`. It uses a
+min-priority queue ordered by edge weight and a `visited` array to track the
+vertices that have already been added to the tree. The method returns
+`V - 1` selected edges for a connected graph and throws an exception when the
+graph is disconnected.
+
+### Logic and steps
+
+For a connected, undirected, weighted graph with `V` vertices and `E` edges:
+
+```text
+1. Choose a starting vertex (this implementation uses vertex 1).
+2. Mark the starting vertex as visited.
+3. Add all edges leaving the starting vertex to a min-priority queue.
+4. While the queue is not empty:
+      a. Remove the edge with the smallest weight.
+      b. If its destination is already visited, discard the edge.
+         It would lead back into the tree and create a cycle.
+      c. Otherwise:
+            - Add the edge to the MST.
+            - Mark its destination as visited.
+            - Add all edges leaving the new vertex to the queue.
+5. Stop after selecting V - 1 edges.
+6. If fewer than V - 1 edges were selected, the graph is disconnected
+   and an MST does not exist.
+```
+
+The priority queue may contain edges that become obsolete after another edge
+visits their destination. This is intentional: those edges are removed lazily,
+and the `visited` check prevents them from being added to the MST.
+
+### Correctness intuition
+
+At any point, the visited vertices form one connected tree. The queue contains
+candidate edges from that tree to unvisited vertices. The minimum-weight
+candidate is the lightest edge crossing the cut between the current tree and
+the remaining vertices. By the cut property, that edge is safe to add to an
+MST. Repeating this process adds one new vertex at a time without creating a
+cycle; after `V - 1` additions, the result is a spanning tree of minimum total
+weight.
+
+### Complexity
+
+- Each graph edge can be inserted into and removed from the priority queue.
+- Priority-queue operations take `O(log E)`.
+- Total time: `O(E log E)`, commonly written as `O(E log V)` for a simple
+  graph.
+- Extra space: `O(V + E)` for the visited array, queue, and result.
+
+### Example
+
+For edges `(A, B, 1)`, `(A, C, 3)`, `(B, C, 2)`, and `(C, D, 4)`, starting at
+`A`:
+
+1. The queue contains `(A, B, 1)` and `(A, C, 3)`.
+2. Select `(A, B, 1)` and add `B`'s outgoing edges.
+3. Select `(B, C, 2)`; `(A, C, 3)` is now obsolete because `C` is reached by
+   the cheaper edge.
+4. Select `(C, D, 4)`.
+
+The MST is `{(A, B), (B, C), (C, D)}` with total weight `7`.
+
 ### Disjoint Set Union (DSU)
 
 The DSU keeps track of which vertices are already connected:
