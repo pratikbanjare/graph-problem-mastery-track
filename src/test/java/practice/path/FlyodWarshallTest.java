@@ -4,12 +4,13 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import practice.exception.GraphException;
 import practice.graph.Graph;
+import practice.model.GraphType;
 
 public class FlyodWarshallTest {
 
     @Test
     public void testFlyodWarshallAlgorithm() {
-        Graph graph  = new Graph(4);
+        Graph graph  = new Graph(4, GraphType.DIRECTED);
         graph.addEdge(1,2,4);
         graph.addEdge(2,3,3);
         graph.addEdge(1,3,10);
@@ -29,7 +30,7 @@ public class FlyodWarshallTest {
 
     @Test
     public void testFlyodWarshallAlgorithm2() {
-        Graph graph  = new Graph(3);
+        Graph graph  = new Graph(3, GraphType.DIRECTED);
         graph.addEdge(1,2,4);
         graph.addEdge(2,3,-6);
         graph.addEdge(1,3,3);
