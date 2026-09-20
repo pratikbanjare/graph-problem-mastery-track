@@ -61,6 +61,10 @@ public class Graph {
         return this.vertices;
     }
 
+    public GraphType getGraphType() {
+        return this.graphType;
+    }
+
     public boolean validateVertex(int v) {
         return (v >= 1 && v <= this.vertices);
     }
