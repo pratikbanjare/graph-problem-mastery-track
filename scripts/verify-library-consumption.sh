@@ -69,7 +69,10 @@ EOF
 cat > "$CONSUMER_DIR/src/main/java/consumer/ConsumerCheck.java" <<'EOF'
 package consumer;
 
-import practice.PracticeProblem;
+import practice.graph.Graph;
+import practice.path.BFS;
+
+import java.util.List;
 
 /**
  * Standalone program that imports and uses a public class from the library
@@ -78,12 +81,16 @@ import practice.PracticeProblem;
  */
 public final class ConsumerCheck {
     public static void main(String[] args) {
-        PracticeProblem problem = new PracticeProblem();
-        int result = problem.add(2, 3);
-        if (result != 5) {
-            throw new IllegalStateException("Library produced unexpected result: " + result);
+        Graph graph = new Graph(4);
+        graph.addEdge(1, 2);
+        graph.addEdge(2, 3);
+        graph.addEdge(3, 4);
+
+        List<Integer> path = new BFS().shortestDistancePath(graph, 1, 4);
+        if (!List.of(1, 2, 3, 4).equals(path)) {
+            throw new IllegalStateException("Library produced unexpected path: " + path);
         }
-        System.out.println("Library import/usage check passed. 2 + 3 = " + result);
+        System.out.println("Library import/usage check passed. Path = " + path);
     }
 }
 EOF
