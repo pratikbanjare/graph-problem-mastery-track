@@ -19,14 +19,14 @@ public class BellmanFord implements IShortestPath{
         Arrays.fill(distance, Integer.MAX_VALUE);
         distance[source] = 0;
         int pass = 1;
-        boolean completedAllAPss = true;
+        boolean completedAllPass = true;
         for (; pass < graph.getNumberOfVertex(); ++pass){
             if(!edgeRelaxation(graph, distance, false)){
-                completedAllAPss = false;
+                completedAllPass = false;
                 break;
             }
         }
-        if (completedAllAPss){
+        if (completedAllPass){
             edgeRelaxation(graph, distance, true);
         }
         return distance;
@@ -36,7 +36,7 @@ public class BellmanFord implements IShortestPath{
     private boolean edgeRelaxation(Graph graph, int[] distance, boolean throwException) throws GraphException {
         boolean change = false;
         for (int  vertex = 1; vertex <= graph.getNumberOfVertex(); ++vertex){
-            for (WeightedEdge weightedEdge : graph.getAdjacencyListOfVertex(vertex)){
+            for (WeightedEdge weightedEdge : graph.getWeightedEdgesOfVertex(vertex)){
                 int weight = weightedEdge.getWeight();
                 int neighbor = weightedEdge.getTo();
 

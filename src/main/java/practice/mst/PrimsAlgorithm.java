@@ -4,7 +4,6 @@ import practice.graph.Graph;
 import practice.model.Edge;
 import practice.model.WeightedEdge;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -20,7 +19,7 @@ public class PrimsAlgorithm {
 
         int startingVertex = 1;
         visited[startingVertex] = true;
-        populateQueue(queue, startingVertex, graph.getAdjacencyListOfVertex(startingVertex));
+        populateQueue(queue, startingVertex, graph.getWeightedEdgesOfVertex(startingVertex));
 
         while(!queue.isEmpty()){
             Edge edge = queue.poll();
@@ -32,7 +31,7 @@ public class PrimsAlgorithm {
             if (mstEdges.size() == graph.getNumberOfVertex() -1){
                 break;
             }
-            populateQueue(queue, edge.getTo(), graph.getAdjacencyListOfVertex(edge.getTo()));
+            populateQueue(queue, edge.getTo(), graph.getWeightedEdgesOfVertex(edge.getTo()));
         }
 
         if (mstEdges.size() != graph.getNumberOfVertex() -1){

@@ -1,12 +1,14 @@
 package practice.model;
 
-
 public class Edge {
-    private int from;
-    private int to;
-    private double weight;
+    private final int from;
+    private final int to;
+    private final int weight;
 
-    public Edge(int from, int to, double weight) {
+    public Edge(int from, int to) {
+        this(from, to, 0);
+    }
+    public Edge(int from, int to, int weight) {
         this.from = from;
         this.to = to;
         this.weight = weight;
@@ -16,12 +18,11 @@ public class Edge {
         return from;
     }
 
-
     public int getTo() {
         return to;
     }
 
-    public double getWeight() {
+    public int getWeight() {
         return weight;
     }
 }
