@@ -1,14 +1,16 @@
 package practice.path;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import practice.graph.Graph;
+import practice.model.GraphType;
 
-public class DagShortestPathTest {
+class DagShortestPathTest {
 
     @Test
-    public void testDagShortestPath() {
+    void testDagShortestPath() {
 
-        Graph graph = new Graph(4);
+        Graph graph = new Graph(4, GraphType.DIRECTED);
 
         graph.addEdge(1,2,5);
         graph.addEdge(2,4,-3);
@@ -22,7 +24,7 @@ public class DagShortestPathTest {
         for (int i = 0; i < distance.length; i++) {
             System.out.print(distance[i] + " -> ");
         }
-
+        Assertions.assertArrayEquals(new int[] {Integer.MAX_VALUE,0,5,2,2}, distance);
 
     }
 }
