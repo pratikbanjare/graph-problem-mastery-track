@@ -4,9 +4,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import practice.exception.GraphException;
 import practice.graph.Graph;
-import practice.model.GraphType;
 
-public class FlyodWarshallTest {
+class FlyodWarshallTest {
 
     @Test()
     void testFlyodWarshallAlgorithm3() {
