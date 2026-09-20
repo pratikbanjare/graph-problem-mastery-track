@@ -36,7 +36,7 @@ public class KruskalAlgorithm {
                 kruskalEdgeList.add(edge);
                 if (++selectedEdges == graph.getNumberOfVertex() - 1) {
                     break;
-                };
+                }
             } else {
                 System.out.println("Edge from " + edge.getFrom() + " to " + edge.getTo() + " is Skipped!!!");
             }
