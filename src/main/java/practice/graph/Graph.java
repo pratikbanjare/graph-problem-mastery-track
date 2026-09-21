@@ -8,7 +8,6 @@ import practice.model.GraphType;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Graph {
 
@@ -147,5 +146,15 @@ public class Graph {
 
     public int getPublicVertex(int v) {
         return v + 1;
+    }
+
+    public static Graph reverse(Graph graph) {
+
+        Graph reversedgraph = new Graph(graph.getNumberOfVertex(),  graph.getGraphType());
+
+        for (Edge edge : graph.getEdges()){
+            reversedgraph.addEdge(edge.getTo(), edge.getFrom(), edge.getWeight());
+        }
+        return reversedgraph;
     }
 }
