@@ -18,7 +18,7 @@ public class DagShortestPath implements IShortestPath {
         TopologicalSort topologicalSort = new TopologicalSort();
         List<Integer> sortedVertex = topologicalSort.sort(graph);
 
-        int[] distance = new int[graph.getNumberOfVertex()+1];
+        int[] distance = new int[graph.getVertexCount()+1];
         Arrays.fill(distance,Integer.MAX_VALUE);
         distance[source] = 0;
 

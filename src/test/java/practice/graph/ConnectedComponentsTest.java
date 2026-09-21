@@ -16,7 +16,7 @@ class ConnectedComponentsTest {
         graph.addEdge(2, 4);
 
         ConnectedComponents connectedComponents = new ConnectedComponents();
-        assertEquals(List.of(1, 2, 3, 4), connectedComponents.bfs(graph, 1, new boolean[graph.getVerticesCount()+1]));
+        assertEquals(List.of(1, 2, 3, 4), connectedComponents.bfs(graph, 1, new boolean[graph.getVertexCount()+1]));
     }
 
     @Test

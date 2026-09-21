@@ -16,13 +16,13 @@ public class KruskalAlgorithm {
             throw  new IllegalArgumentException("Undirected graphs are not allowed in Kruskal");
         }
 
-        List<Edge> kruskalEdges = graph.getEdges();
+        List<Edge> kruskalEdges = new ArrayList<>(graph.getEdges());
         kruskalEdges.sort(Comparator.comparing(Edge::getWeight));
 
-        int[] rank = new int[graph.getNumberOfVertex()+1];
-        int[] parent = new int[graph.getNumberOfVertex()+1];
+        int[] rank = new int[graph.getVertexCount()+1];
+        int[] parent = new int[graph.getVertexCount()+1];
 
-        for(int i = 1; i<=graph.getNumberOfVertex(); i++){
+        for(int i = 1; i<=graph.getVertexCount(); i++){
             parent[i] = i;
             rank[i] = 0;
         }
@@ -34,14 +34,14 @@ public class KruskalAlgorithm {
             if (union(edge.getFrom(), edge.getTo(), parent, rank)){
                 System.out.println("Edge from " + edge.getFrom() + " to " + edge.getTo() + " is accepted!!!");
                 kruskalEdgeList.add(edge);
-                if (++selectedEdges == graph.getNumberOfVertex() - 1) {
+                if (++selectedEdges == graph.getVertexCount() - 1) {
                     break;
                 }
             } else {
                 System.out.println("Edge from " + edge.getFrom() + " to " + edge.getTo() + " is Skipped!!!");
             }
         }
-        if (selectedEdges < graph.getNumberOfVertex()-1) {
+        if (selectedEdges < graph.getVertexCount()-1) {
             throw new IllegalArgumentException("Graph is disconnected!!!\nMinimum spanning tree requires connected graph!!!");
         }
         return kruskalEdgeList;

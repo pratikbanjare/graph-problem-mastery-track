@@ -1,6 +1,7 @@
 package practice.scc;
 
 import practice.graph.Graph;
+import practice.graph.GraphOperation;
 import practice.model.GraphType;
 import practice.model.WeightedEdge;
 
@@ -16,9 +17,9 @@ public class KosarajuAlgorithm {
             throw new IllegalArgumentException("Kosaraju's algorithm requires Directed Graph!!!");
         }
 
-        boolean[] visited = new boolean[graph.getNumberOfVertex() + 1];
+        boolean[] visited = new boolean[graph.getVertexCount() + 1];
         List<Integer> finishingOrder = new ArrayList<>();
-        for (int vertex = 1; vertex <=graph.getNumberOfVertex(); vertex++) {
+        for (int vertex = 1; vertex <=graph.getVertexCount(); vertex++) {
             if (!visited[vertex]){
                 dfs(graph, vertex, visited, finishingOrder);
             }
@@ -26,10 +27,10 @@ public class KosarajuAlgorithm {
 
         Collections.reverse(finishingOrder);
 
-        Graph reversedGraph = Graph.reverse(graph);
+        Graph reversedGraph = GraphOperation.reverse(graph);
 
         List<List<Integer>> sccLists = new ArrayList<>();
-        visited = new boolean[reversedGraph.getNumberOfVertex() + 1];
+        visited = new boolean[reversedGraph.getVertexCount() + 1];
         for (Integer vertex : finishingOrder){
             if (!visited[vertex]){
                 List<Integer> scc = new ArrayList<>();

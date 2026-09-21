@@ -1,8 +1,8 @@
 package practice.model;
 
 public class WeightedEdge {
-    private  int  to;
-    private int weight;
+    private final int  to;
+    private final int weight;
 
     public WeightedEdge(int to, int weight){
         this.to = to;

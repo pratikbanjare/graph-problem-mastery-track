@@ -15,8 +15,8 @@ public class BFS {
     }
 
     public int[] shortestDistancePathInternal(Graph graph, int source, int target) {
-        boolean[] visited = new boolean[graph.getVerticesCount() + 1];
-        int[] parent = new int[graph.getVerticesCount() + 1];
+        boolean[] visited = new boolean[graph.getVertexCount() + 1];
+        int[] parent = new int[graph.getVertexCount() + 1];
         Arrays.fill(parent, -1);
         Queue<Integer> queue = new ArrayDeque<>();
 
@@ -29,7 +29,7 @@ public class BFS {
 
         while(!queue.isEmpty()){
             int current = queue.poll();
-            for (int neighbor : graph.getNeighbors(current)){
+            for (int neighbor : graph.getEdgesOfVertex(current)){
                 if( !visited[neighbor]){
                     parent[neighbor] = current;
                     visited[neighbor] = true;
@@ -70,8 +70,8 @@ public class BFS {
     }
 
     private int shortestDistanceInternal (Graph graph, int source, int target) {
-        boolean[] visited = new boolean[graph.getVerticesCount()+1];
-        int[] distance = new int[graph.getVerticesCount()+1];
+        boolean[] visited = new boolean[graph.getVertexCount()+1];
+        int[] distance = new int[graph.getVertexCount()+1];
         Arrays.fill(distance, -1);
 
         Queue<Integer> queue = new ArrayDeque<>();
@@ -80,7 +80,7 @@ public class BFS {
         distance[source] = 0;
         while(!queue.isEmpty()){
             int current = queue.poll();
-            for (int neighbor : graph.getNeighbors(current)){
+            for (int neighbor : graph.getEdgesOfVertex(current)){
                 if (!visited[neighbor]){
                     queue.add(neighbor);
                     visited[neighbor] = true;

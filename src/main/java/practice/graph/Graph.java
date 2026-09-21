@@ -1,28 +1,34 @@
 
 package practice.graph;
 
+import practice.exception.GraphException;
 import practice.model.Edge;
-import practice.model.WeightedEdge;
 import practice.model.GraphType;
+import practice.model.WeightedEdge;
 
-import java.util.List;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Objects;
+import java.util.logging.Logger;
 
 public class Graph {
 
-    private int vertices;
-    private GraphType graphType;
-    private List<List<WeightedEdge>> weightedAdjacencyList;
-    private List<Edge> edges;
+    private static final Logger LOGGER = Logger.getLogger(Graph.class.getName());
+
+    private final int vertices;
+    private final GraphType graphType;
+    private final List<List<WeightedEdge>> weightedAdjacencyList;
+    private final List<Edge> edges;
 
     public Graph(int vertices) {
         this(vertices, GraphType.UNDIRECTED);
     }
 
     public Graph(int vertices, GraphType graphType) {
-        if (vertices <= 0) throw new IllegalArgumentException("Invalid Vertices");
-        this.graphType = graphType;
+        if (vertices <= 0) {
+            throw new GraphException("Invalid Vertices");
+        }
+        this.graphType = Objects.requireNonNull(graphType, "Graph type must not be null");
         this.vertices = vertices;
         weightedAdjacencyList = new ArrayList<>();
         edges = new ArrayList<>();
@@ -35,38 +41,33 @@ public class Graph {
         return this.vertices;
     }
 
-    public int getNumberOfVertex() {
-        return this.vertices;
-    }
-
     public List<Edge> getEdges() {
-        return this.edges;
+        return List.copyOf(this.edges);
     }
 
     public List<List<WeightedEdge>> getWeightedAdjacencyList() {
-        return this.weightedAdjacencyList;
+        return this.weightedAdjacencyList.stream()
+                .map(List::copyOf)
+                .toList();
     }
 
     public List<WeightedEdge> getWeightedEdgesOfVertex(int vertex) {
-        if (!validateVertex(vertex)) throw new IllegalArgumentException("Invalid Vertex");
-        return this.weightedAdjacencyList.get(getVertexPos(vertex));
+        validateVertexOrThrow(vertex);
+        return List.copyOf(this.weightedAdjacencyList.get(getVertexPos(vertex)));
     }
 
     public List<Integer> getEdgesOfVertex(int vertex) {
-        if (!validateVertex(vertex)) throw new IllegalArgumentException("Invalid Vertex");
+        validateVertexOrThrow(vertex);
         return this.weightedAdjacencyList.get(getVertexPos(vertex)).stream().map(WeightedEdge::getTo).toList();
     }
 
-    public int getVertices() {
-        return this.vertices;
-    }
 
     public GraphType getGraphType() {
         return this.graphType;
     }
 
-    public boolean validateVertex(int v) {
-        return (v >= 1 && v <= this.vertices);
+    public boolean validateVertex(int vertex) {
+        return vertex >= 1 && vertex <= this.vertices;
     }
 
     private int getVertexPos(int v) {
@@ -78,12 +79,11 @@ public class Graph {
     }
 
     public void addEdge(int u, int v, int weight) {
-        if (!validateVertex(u) || !validateVertex(v)) {
-            throw new IllegalArgumentException("Invalid Vertex");
-        }
+        validateVertexOrThrow(u);
+        validateVertexOrThrow(v);
 
         if (hasEdge(u, v)) {
-            System.out.println("Edge already exists");
+            LOGGER.warning("Edge already exists");
             return;
         }
 
@@ -95,66 +95,41 @@ public class Graph {
     }
 
     boolean hasEdge(int u, int v) {
-        if (!validateVertex(u) || !validateVertex(v)) {
-            throw new IllegalArgumentException("Invalid Vertex");
-        }
+        validateVertexOrThrow(u);
+        validateVertexOrThrow(v);
         return weightedAdjacencyList.get(getVertexPos(u))
                 .stream()
                 .map(WeightedEdge::getTo)
                 .anyMatch(to -> to == v);
     }
 
-    public void removeEdge(int u, int v) {
-        if (!validateVertex(u) || !validateVertex(v)) {
-            throw new IllegalArgumentException("Invalid Vertex");
+    public void removeEdge(int v1, int v2) {
+        validateVertexOrThrow(v1);
+        validateVertexOrThrow(v2);
+
+        this.removeFromAdjacencyList(v1, v2);
+        if (this.graphType == GraphType.UNDIRECTED) {
+            this.removeFromAdjacencyList(v2, v1);
         }
+        this.edges.removeIf(edge -> isEdge(edge, v1, v2));
+    }
 
-        this.removeFromAdjacencyList(u, v);
-        if(this.graphType == GraphType.UNDIRECTED) {
-            this.removeFromAdjacencyList(v,u);
+    private boolean isEdge(Edge edge, int from, int to) {
+        return (edge.getFrom() == from && edge.getTo() == to)
+                || (graphType == GraphType.UNDIRECTED
+                && edge.getFrom() == to && edge.getTo() == from);
+    }
+
+    private void removeFromAdjacencyList(int from, int to) {
+        this.weightedAdjacencyList.get(getVertexPos(from))
+                .removeIf(edge -> edge.getTo() == to);
+    }
+
+    private void validateVertexOrThrow(int vertex) {
+        if (!validateVertex(vertex)) {
+            throw new GraphException("Vertex must be between 1 and "
+                    + this.vertices + ": " + vertex);
         }
-        this.edges = this.edges.stream()
-                .filter(edge -> edge.getFrom() != u && edge.getTo() != v)
-                .collect(Collectors.toList());
     }
 
-    private void removeFromAdjacencyList(int u, int v) {
-        List<WeightedEdge> e1 = this.weightedAdjacencyList.get(getVertexPos(u));
-        List<WeightedEdge> list = e1.stream()
-                .filter(weightedEdge -> weightedEdge.getTo() != v)
-                .toList();
-        weightedAdjacencyList.set(getVertexPos(u), list);
-    }
-
-    void printGraph() {
-        for (int i = 0; i < this.vertices; ++i) {
-            System.out.println();
-            System.out.print("For vertex " + i + 1 + "neighbors are -[ ");
-            List<WeightedEdge> neighbors = weightedAdjacencyList.get(i);
-            neighbors.forEach(j -> System.out.print("(" + j.getTo() + ", " + j.getWeight() + ")"));
-        }
-        System.out.print("]");
-    }
-
-    public int getVerticesCount() {
-        return this.vertices;
-    }
-
-    public List<Integer> getNeighbors(int v) {
-        return this.weightedAdjacencyList.get(getVertexPos(v)).stream().map(WeightedEdge::getTo).toList();
-    }
-
-    public int getPublicVertex(int v) {
-        return v + 1;
-    }
-
-    public static Graph reverse(Graph graph) {
-
-        Graph reversedgraph = new Graph(graph.getNumberOfVertex(),  graph.getGraphType());
-
-        for (Edge edge : graph.getEdges()){
-            reversedgraph.addEdge(edge.getTo(), edge.getFrom(), edge.getWeight());
-        }
-        return reversedgraph;
-    }
 }

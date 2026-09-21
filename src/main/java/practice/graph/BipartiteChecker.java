@@ -8,9 +8,9 @@ public class BipartiteChecker {
 
     public boolean isBipartite(Graph graph){
 
-        int[] color = new int[graph.getVertices()+1];
+        int[] color = new int[graph.getVertexCount()+1];
         Arrays.fill(color, -1);
-        for (int i = 1; i<= graph.getVertices(); ++i){
+        for (int i = 1; i<= graph.getVertexCount(); ++i){
             if (color[i] == -1){
                 System.out.println("Validating Bipartite from vertex " + i);
                 if( !isBipartiteInternal(graph, i, color)){
