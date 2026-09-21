@@ -10,7 +10,7 @@ public class FlyodWarshall {
 
     public int[][] flyodWarshallAlgorithm(Graph graph) throws GraphException {
         int[][] distance = initializeDistance(graph);
-        int vertexCount = graph.getNumberOfVertex();
+        int vertexCount = graph.getVertexCount();
         for (int k = 1; k <= vertexCount; ++k){
             for (int i = 1; i <= vertexCount; ++i){
                 for (int j = 1; j <=vertexCount; ++j) {
@@ -34,14 +34,14 @@ public class FlyodWarshall {
     }
 
     private int[][] initializeDistance(Graph graph) {
-        int[][] distance = new int[1 + graph.getNumberOfVertex()][1 + graph.getNumberOfVertex()];
+        int[][] distance = new int[1 + graph.getVertexCount()][1 + graph.getVertexCount()];
 
-        for (int i = 0; i<= graph.getNumberOfVertex(); ++i){
+        for (int i = 0; i<= graph.getVertexCount(); ++i){
             Arrays.fill(distance[i], Integer.MAX_VALUE);
             distance[i][i] = 0;
         }
 
-        for (int vertex = 1; vertex<= graph.getNumberOfVertex(); ++vertex){
+        for (int vertex = 1; vertex<= graph.getVertexCount(); ++vertex){
             for (WeightedEdge weightedEdge : graph.getWeightedEdgesOfVertex(vertex)){
                 distance[vertex][weightedEdge.getTo()] = Math.min(
                         distance[vertex][weightedEdge.getTo()],

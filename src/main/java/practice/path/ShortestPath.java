@@ -11,7 +11,7 @@ public class ShortestPath {
 
     public int[] djikstra(Graph graph, int source){
         validateGraph(graph);
-        int[] parent = new int[graph.getNumberOfVertex()+1];
+        int[] parent = new int[graph.getVertexCount()+1];
         return this.djikstra(graph, source, parent);
     }
 
@@ -24,7 +24,7 @@ public class ShortestPath {
         if (source == target) {
             return List.of(source);
         }
-        int[] parent = new int[graph.getNumberOfVertex()+1];
+        int[] parent = new int[graph.getVertexCount()+1];
         int[] distance = this.djikstra(graph, source, parent, target);
 
         int current = target;
@@ -43,7 +43,7 @@ public class ShortestPath {
     private int[] djikstra(Graph graph, int source, int[] parent, int target) {
 
 
-        int[] distance = new int[graph.getNumberOfVertex()+1];
+        int[] distance = new int[graph.getVertexCount()+1];
         Arrays.fill(distance, Integer.MAX_VALUE);
         Arrays.fill(parent, -1);
 

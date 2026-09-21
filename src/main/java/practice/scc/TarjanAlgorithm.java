@@ -16,16 +16,16 @@ public class TarjanAlgorithm {
         if (graph.getGraphType() == GraphType.UNDIRECTED){
             throw new IllegalArgumentException("Tarjan algorithm works on undirected graph only!!!");
         }
-        int[] discoveryTIme = new int[graph.getNumberOfVertex() + 1];
-        int[] lowLink = new int[graph.getNumberOfVertex() + 1];
-        boolean[] onStack = new boolean[graph.getNumberOfVertex() + 1];
+        int[] discoveryTIme = new int[graph.getVertexCount() + 1];
+        int[] lowLink = new int[graph.getVertexCount() + 1];
+        boolean[] onStack = new boolean[graph.getVertexCount() + 1];
         int[] time = {0};
         Stack<Integer> stack = new Stack<>();
 
         List<List<Integer>> scc = new ArrayList<>();
         Arrays.fill(discoveryTIme, -1);
 
-        for (int vertex = 1; vertex <= graph.getNumberOfVertex(); vertex++) {
+        for (int vertex = 1; vertex <= graph.getVertexCount(); vertex++) {
             if (discoveryTIme[vertex] == -1){
                 dfs(vertex,graph, discoveryTIme, lowLink, onStack, stack, time, scc);
             }

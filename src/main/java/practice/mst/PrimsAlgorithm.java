@@ -15,7 +15,7 @@ public class PrimsAlgorithm {
 
         List<Edge> mstEdges = new ArrayList<>();
         PriorityQueue<Edge> queue = new PriorityQueue<>(Comparator.comparing(Edge::getWeight));
-        boolean[] visited = new boolean[graph.getNumberOfVertex() + 1];
+        boolean[] visited = new boolean[graph.getVertexCount() + 1];
 
         int startingVertex = 1;
         visited[startingVertex] = true;
@@ -28,13 +28,13 @@ public class PrimsAlgorithm {
             }
             mstEdges.add(edge);
             visited[edge.getTo()] = true;
-            if (mstEdges.size() == graph.getNumberOfVertex() -1){
+            if (mstEdges.size() == graph.getVertexCount() -1){
                 break;
             }
             populateQueue(queue, edge.getTo(), graph.getWeightedEdgesOfVertex(edge.getTo()));
         }
 
-        if (mstEdges.size() != graph.getNumberOfVertex() -1){
+        if (mstEdges.size() != graph.getVertexCount() -1){
             throw new IllegalArgumentException("Provided graph is disconnected. MST requires connected graph!!!!");
         }
 

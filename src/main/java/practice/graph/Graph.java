@@ -41,10 +41,6 @@ public class Graph {
         return this.vertices;
     }
 
-    public int getNumberOfVertex() {
-        return this.vertices;
-    }
-
     public List<Edge> getEdges() {
         return this.edges;
     }
@@ -67,9 +63,6 @@ public class Graph {
         return this.weightedAdjacencyList.get(getVertexPos(vertex)).stream().map(WeightedEdge::getTo).toList();
     }
 
-    public int getVertices() {
-        return this.vertices;
-    }
 
     public GraphType getGraphType() {
         return this.graphType;
@@ -158,24 +151,9 @@ public class Graph {
         LOGGER.info(graphDescription::toString);
     }
 
-    public int getVerticesCount() {
-        return this.vertices;
-    }
-
-    public List<Integer> getNeighbors(int vertex) {
-        if (!validateVertex(vertex)) {
-            throw new GraphException("Invalid Vertex");
-        }
-        return this.weightedAdjacencyList.get(getVertexPos(vertex)).stream().map(WeightedEdge::getTo).toList();
-    }
-
-    public int getPublicVertex(int vertex) {
-        return vertex + 1;
-    }
-
     public static Graph reverse(Graph graph) {
 
-        Graph reversedGraph = new Graph(graph.getNumberOfVertex(), graph.getGraphType());
+        Graph reversedGraph = new Graph(graph.getVertexCount(), graph.getGraphType());
 
         for (Edge edge : graph.getEdges()) {
             reversedGraph.addEdge(edge.getTo(), edge.getFrom(), edge.getWeight());

@@ -9,8 +9,8 @@ public class ConnectedComponents {
 
     public List<List<Integer>> connectedComponent(Graph graph) {
         List<List<Integer>> components = new ArrayList<>();
-        boolean[] visited = new boolean[graph.getVerticesCount()+1];
-        for (int i = 1; i <= graph.getVerticesCount(); ++i) {
+        boolean[] visited = new boolean[graph.getVertexCount()+1];
+        for (int i = 1; i <= graph.getVertexCount(); ++i) {
             if (visited[i]) {
                 continue;
             }
@@ -32,7 +32,7 @@ public class ConnectedComponents {
         while (!queue.isEmpty()) {
             int current = queue.poll();
             component.add(current);
-            for (int neighbor : graph.getNeighbors(current)) {
+            for (int neighbor : graph.getEdgesOfVertex(current)) {
                 if (!visited[neighbor]) {
                     visited[neighbor] = true;
                     queue.add(neighbor);

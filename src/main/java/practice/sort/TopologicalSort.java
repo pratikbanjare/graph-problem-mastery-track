@@ -13,9 +13,9 @@ public class TopologicalSort {
     public List<Integer> sort(Graph graph){
 
         List<Integer> sortedData = new LinkedList<>();
-        int[] state = new int[graph.getNumberOfVertex() + 1];
+        int[] state = new int[graph.getVertexCount() + 1];
 
-        for (int vertex = 1; vertex <= graph.getNumberOfVertex(); ++vertex){
+        for (int vertex = 1; vertex <= graph.getVertexCount(); ++vertex){
             if (state[vertex] == 0){
                 sortInterval(graph, vertex, state, sortedData);
             }
