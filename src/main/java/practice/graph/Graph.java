@@ -57,12 +57,12 @@ public class Graph {
         return this.weightedAdjacencyList.get(getVertexPos(vertex)).stream().map(WeightedEdge::getTo).toList();
     }
 
-    public GraphType getGraphType() {
-        return this.graphType;
-    }
-
     public int getVertices() {
         return this.vertices;
+    }
+
+    public GraphType getGraphType() {
+        return this.graphType;
     }
 
     public boolean validateVertex(int v) {

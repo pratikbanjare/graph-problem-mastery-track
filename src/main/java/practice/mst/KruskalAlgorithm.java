@@ -12,7 +12,7 @@ public class KruskalAlgorithm {
 
     public List<Edge> minimumSpanningTree(Graph graph) {
 
-        if (graph.getGraphType() != GraphType.UNDIRECTED) {
+        if (!GraphType.UNDIRECTED.equals(graph.getGraphType())) {
             throw  new IllegalArgumentException("Undirected graphs are not allowed in Kruskal");
         }
 
