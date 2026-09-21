@@ -54,7 +54,7 @@ public class Graph {
 
     public List<Integer> getEdgesOfVertex(int vertex) {
         if (!validateVertex(vertex)) throw new IllegalArgumentException("Invalid Vertex");
-        return this.weightedAdjacencyList.get(getVertexPos(vertex)).stream().map(WeightedEdge::getTo).collect(Collectors.toList());
+        return this.weightedAdjacencyList.get(getVertexPos(vertex)).stream().map(WeightedEdge::getTo).toList();
     }
 
     public int getVertices() {
@@ -141,7 +141,7 @@ public class Graph {
     }
 
     public List<Integer> getNeighbors(int v) {
-        return this.weightedAdjacencyList.get(getVertexPos(v)).stream().map(WeightedEdge::getTo).collect(Collectors.toList());
+        return this.weightedAdjacencyList.get(getVertexPos(v)).stream().map(WeightedEdge::getTo).toList();
     }
 
     public int getPublicVertex(int v) {
