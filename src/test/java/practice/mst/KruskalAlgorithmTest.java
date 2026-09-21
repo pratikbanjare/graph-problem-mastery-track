@@ -1,5 +1,6 @@
 package practice.mst;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import practice.graph.Graph;
 import practice.model.Edge;
@@ -7,10 +8,10 @@ import practice.model.GraphType;
 
 import java.util.List;
 
-public class KruskalAlgorithmTest {
+class KruskalAlgorithmTest {
 
     @Test
-    public void testKruskalAlgorithm() {
+    void testKruskalAlgorithm() {
         Graph graph = new Graph(4, GraphType.UNDIRECTED);
         graph.addEdge(1,2,10);
         graph.addEdge(1,3,6);
@@ -21,9 +22,7 @@ public class KruskalAlgorithmTest {
         KruskalAlgorithm algo = new KruskalAlgorithm();
         List<Edge> edges = algo.minimumSpanningTree(graph);
 
-        for(Edge edge: edges){
-            System.out.println(edge.getFrom() +  " -> " + edge.getTo() +  " -> " + edge.getWeight());
-        }
+        Assertions.assertEquals(3, edges.size());
 
 
     }

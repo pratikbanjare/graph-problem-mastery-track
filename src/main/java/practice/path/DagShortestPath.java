@@ -23,7 +23,7 @@ public class DagShortestPath implements IShortestPath {
         distance[source] = 0;
 
         for (int vertex : sortedVertex){
-            for (WeightedEdge weightedEdge : graph.getAdjacencyListOfVertex(vertex)){
+            for (WeightedEdge weightedEdge : graph.getWeightedEdgesOfVertex(vertex)){
                 int neighbor =  weightedEdge.getTo();
                 int weight = weightedEdge.getWeight();
 
