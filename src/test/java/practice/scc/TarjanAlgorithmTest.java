@@ -6,11 +6,11 @@ import practice.model.GraphType;
 
 import java.util.List;
 
-public class TarjanAlgorithmTest {
+class TarjanAlgorithmTest {
 
 
     @Test
-    public void testTarjanAlgorithm() {
+    void testTarjanAlgorithm() {
         TarjanAlgorithm tarjanAlgorithm = new TarjanAlgorithm();
 
         Graph graph = new Graph(5, GraphType.DIRECTED);
