@@ -76,3 +76,131 @@ Second DFS
     whenever you encounter an unvisited vertex, start a DFS on the reversed graph
     all vertices discovered by that DFS form one SCC
 ```
+
+## Tarjan's Algorithm
+
+Tarjan manages to find SCCs with one DFS on the original graph.
+
+During a DFS, how can we tell that a vertex is the “root” of an SCC?
+
+Consider the graph
+```text
+1 → 2 → 3
+    ↑   ↓
+    └───┘
+
+3 → 4 → 5
+    ↑   ↓
+    └───┘
+```
+
+Imagine DFS starts at 1:
+
+```text
+1
+└── 2
+└── 3
+├── 2   ← back edge
+└── 4
+└── 5
+└── 4
+```
+
+discoveryTime - "When did DFS first discover me?"
+
+lowLink[v] - "What is the earliest-discovered vertex that I can reach while staying connected through the DFS structure?"
+
+stack - //The stack contains vertices whose SCC has not been finalized yet.
+
+````text
+discoveryTime → when was I discovered?
+lowLink       → how far back can I reach?
+stack         → which vertices have unresolved SCC membership?
+onStack       → is this vertex still in that unresolved set?
+````
+
+hree cases :
+v → u
+
+A. u unvisited
+- DFS(u)
+-  lowLink[v] = min(lowLink[v], lowLink[u])
+
+B. u visited + on stack
+- lowLink[v] = min(lowLink[v], discoveryTime[u])
+
+C. u visited + NOT on stack
+- do nothing
+
+And after all neighbors of v have been processed:
+
+```text
+if (lowLink[v] == discoveryTime[v])
+// v is the root of an SCC
+// pop stack until v
+```
+
+Example 
+```text
+1 → 2 → 3
+    ↑   ↓
+    └───┘
+```
+
+tarjan's algorithm on above graph - 
+
+```text
+DFS(1)
+  |
+  v
+DFS(2)
+  |
+  v
+DFS(3)
+  |
+  | 3 → 2 (back edge)
+  v
+lowLink[3] = 1
+  |
+  v
+return to 2
+  |
+  v
+lowLink[2] = min(1, 1) = 1
+
+lowLink[2] == discoveryTime[2]
+        ↓
+     SCC root
+        ↓
+    pop 3, pop 2
+```
+
+```text
+dfs(v)
+
+    assign discoveryTime[v]
+    initialize lowLink[v]
+    increment time
+
+    push v
+    mark v onStack
+
+    for each outgoing edge v → u
+
+        if u is unvisited
+            dfs(u)
+            lowLink[v] = min(lowLink[v], lowLink[u])
+
+        else if u is on stack
+            lowLink[v] = min(lowLink[v], discoveryTime[u])
+
+        else
+            do nothing
+
+    if lowLink[v] == discoveryTime[v]
+
+        while v has not been popped
+            pop u
+            mark u not onStack
+            add u to current SCC
+```
