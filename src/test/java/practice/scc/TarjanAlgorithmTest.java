@@ -6,6 +6,8 @@ import practice.model.GraphType;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class TarjanAlgorithmTest {
 
 
@@ -22,6 +24,8 @@ class TarjanAlgorithmTest {
         graph.addEdge(5,4);
 
         List<List<Integer>> lists = tarjanAlgorithm.stronglyConnectedComponents(graph);
+
+        assertEquals(List.of(List.of(5, 4), List.of(2), List.of(3), List.of(1)), lists);
 
         for (List<Integer> list : lists){
             list.forEach(x -> System.out.print("-> " + x));
