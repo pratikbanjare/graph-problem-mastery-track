@@ -42,24 +42,22 @@ public class Graph {
     }
 
     public List<Edge> getEdges() {
-        return this.edges;
+        return List.copyOf(this.edges);
     }
 
     public List<List<WeightedEdge>> getWeightedAdjacencyList() {
-        return this.weightedAdjacencyList;
+        return this.weightedAdjacencyList.stream()
+                .map(List::copyOf)
+                .toList();
     }
 
     public List<WeightedEdge> getWeightedEdgesOfVertex(int vertex) {
-        if (!validateVertex(vertex)) {
-            throw new GraphException("Invalid Vertex");
-        }
-        return this.weightedAdjacencyList.get(getVertexPos(vertex));
+        validateVertexOrThrow(vertex);
+        return List.copyOf(this.weightedAdjacencyList.get(getVertexPos(vertex)));
     }
 
     public List<Integer> getEdgesOfVertex(int vertex) {
-        if (!validateVertex(vertex)) {
-            throw new GraphException("Invalid Vertex");
-        }
+        validateVertexOrThrow(vertex);
         return this.weightedAdjacencyList.get(getVertexPos(vertex)).stream().map(WeightedEdge::getTo).toList();
     }
 
@@ -81,9 +79,8 @@ public class Graph {
     }
 
     public void addEdge(int u, int v, int weight) {
-        if (!validateVertex(u) || !validateVertex(v)) {
-            throw new GraphException("Invalid Vertex");
-        }
+        validateVertexOrThrow(u);
+        validateVertexOrThrow(v);
 
         if (hasEdge(u, v)) {
             LOGGER.warning("Edge already exists");
@@ -98,25 +95,23 @@ public class Graph {
     }
 
     boolean hasEdge(int u, int v) {
-        if (!validateVertex(u) || !validateVertex(v)) {
-            throw new GraphException("Invalid Vertex");
-        }
+        validateVertexOrThrow(u);
+        validateVertexOrThrow(v);
         return weightedAdjacencyList.get(getVertexPos(u))
                 .stream()
                 .map(WeightedEdge::getTo)
                 .anyMatch(to -> to == v);
     }
 
-    public void removeEdge(int u, int v) {
-        if (!validateVertex(u) || !validateVertex(v)) {
-            throw new GraphException("Invalid Vertex");
-        }
+    public void removeEdge(int v1, int v2) {
+        validateVertexOrThrow(v1);
+        validateVertexOrThrow(v2);
 
-        this.removeFromAdjacencyList(u, v);
+        this.removeFromAdjacencyList(v1, v2);
         if (this.graphType == GraphType.UNDIRECTED) {
-            this.removeFromAdjacencyList(v, u);
+            this.removeFromAdjacencyList(v2, v1);
         }
-        this.edges.removeIf(edge -> isEdge(edge, u, v));
+        this.edges.removeIf(edge -> isEdge(edge, v1, v2));
     }
 
     private boolean isEdge(Edge edge, int from, int to) {
@@ -125,39 +120,16 @@ public class Graph {
                 && edge.getFrom() == to && edge.getTo() == from);
     }
 
-    private void removeFromAdjacencyList(int u, int v) {
-        List<WeightedEdge> e1 = this.weightedAdjacencyList.get(getVertexPos(u));
-        List<WeightedEdge> list = e1.stream()
-                .filter(weightedEdge -> weightedEdge.getTo() != v)
-                .toList();
-        weightedAdjacencyList.set(getVertexPos(u), list);
+    private void removeFromAdjacencyList(int from, int to) {
+        this.weightedAdjacencyList.get(getVertexPos(from))
+                .removeIf(edge -> edge.getTo() == to);
     }
 
-    void printGraph() {
-        StringBuilder graphDescription = new StringBuilder();
-        for (int i = 0; i < this.vertices; ++i) {
-            graphDescription.append(System.lineSeparator())
-                    .append("For vertex ")
-                    .append(i + 1)
-                    .append(" neighbors are -[ ");
-            List<WeightedEdge> neighbors = weightedAdjacencyList.get(i);
-            neighbors.forEach(edge -> graphDescription.append("(")
-                    .append(edge.getTo())
-                    .append(", ")
-                    .append(edge.getWeight())
-                    .append(")"));
+    private void validateVertexOrThrow(int vertex) {
+        if (!validateVertex(vertex)) {
+            throw new GraphException("Vertex must be between 1 and "
+                    + this.vertices + ": " + vertex);
         }
-        graphDescription.append("]");
-        LOGGER.info(graphDescription::toString);
     }
 
-    public static Graph reverse(Graph graph) {
-
-        Graph reversedGraph = new Graph(graph.getVertexCount(), graph.getGraphType());
-
-        for (Edge edge : graph.getEdges()) {
-            reversedGraph.addEdge(edge.getTo(), edge.getFrom(), edge.getWeight());
-        }
-        return reversedGraph;
-    }
 }

@@ -16,7 +16,7 @@ public class KruskalAlgorithm {
             throw  new IllegalArgumentException("Undirected graphs are not allowed in Kruskal");
         }
 
-        List<Edge> kruskalEdges = graph.getEdges();
+        List<Edge> kruskalEdges = new ArrayList<>(graph.getEdges());
         kruskalEdges.sort(Comparator.comparing(Edge::getWeight));
 
         int[] rank = new int[graph.getVertexCount()+1];

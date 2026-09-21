@@ -1,6 +1,7 @@
 package practice.scc;
 
 import practice.graph.Graph;
+import practice.graph.GraphOperation;
 import practice.model.GraphType;
 import practice.model.WeightedEdge;
 
@@ -26,7 +27,7 @@ public class KosarajuAlgorithm {
 
         Collections.reverse(finishingOrder);
 
-        Graph reversedGraph = Graph.reverse(graph);
+        Graph reversedGraph = GraphOperation.reverse(graph);
 
         List<List<Integer>> sccLists = new ArrayList<>();
         visited = new boolean[reversedGraph.getVertexCount() + 1];

@@ -1,0 +1,32 @@
+package practice.graph;
+
+import practice.model.WeightedEdge;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.logging.Logger;
+
+public final class GraphFormatter {
+
+    private static final Logger LOGGER = Logger.getLogger(GraphFormatter.class.getName());
+
+    public void printGraph(Graph graph) {
+        Objects.requireNonNull(graph, "Graph must not be null");
+
+        StringBuilder graphDescription = new StringBuilder();
+        for (int i = 0; i < graph.getVertexCount(); ++i) {
+            graphDescription.append(System.lineSeparator())
+                    .append("For vertex ")
+                    .append(i + 1)
+                    .append(" neighbors are -[ ");
+            List<WeightedEdge> neighbors = graph.getWeightedEdgesOfVertex(i + 1);
+            neighbors.forEach(edge -> graphDescription.append("(")
+                    .append(edge.getTo())
+                    .append(", ")
+                    .append(edge.getWeight())
+                    .append(")"));
+        }
+        graphDescription.append("]");
+        LOGGER.info(graphDescription::toString);
+    }
+}
