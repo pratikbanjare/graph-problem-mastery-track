@@ -6,10 +6,12 @@ import practice.model.GraphType;
 
 import java.util.List;
 
-public class KosarajuAlgorithmTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+class KosarajuAlgorithmTest {
 
     @Test
-    public void test(){
+    void test(){
         KosarajuAlgorithm kosarajuAlgorithm = new KosarajuAlgorithm();
         Graph graph = new Graph(5, GraphType.DIRECTED);
         graph.addEdge(1,2);
@@ -21,12 +23,11 @@ public class KosarajuAlgorithmTest {
 
         List<List<Integer>> lists = kosarajuAlgorithm.stronglyConnectedAlgorithm(graph);
 
+        assertEquals(List.of(List.of(1), List.of(3), List.of(2), List.of(5, 4)), lists);
 
         for (List<Integer> list : lists){
             list.forEach(x -> System.out.print("-> " + x));
             System.out.println();
         }
-
-
     }
 }

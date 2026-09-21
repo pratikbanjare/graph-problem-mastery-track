@@ -41,7 +41,7 @@ public class TarjanAlgorithm {
         onStack[vertex] = true;
         stack.push(vertex);
 
-        for (WeightedEdge weightedEdge : graph.getAdjacencyListOfVertex(vertex)) {
+        for (WeightedEdge weightedEdge : graph.getWeightedEdgesOfVertex(vertex)) {
             if (discoveryTIme[weightedEdge.getTo()] == -1){
                 dfs(weightedEdge.getTo(), graph, discoveryTIme, lowLink, onStack, stack, time, scc);
                 lowLink[vertex] = Math.min(lowLink[weightedEdge.getTo()], lowLink[vertex]);

@@ -44,7 +44,7 @@ public class KosarajuAlgorithm {
     private void dfs(Graph graph, int vertex, boolean[] visited, List<Integer> finishingOrder) {
         visited[vertex] = true;
 
-        for (WeightedEdge edge : graph.getAdjacencyListOfVertex(vertex)){
+        for (WeightedEdge edge : graph.getWeightedEdgesOfVertex(vertex)){
             if (visited[edge.getTo()]){
                 continue;
             }
