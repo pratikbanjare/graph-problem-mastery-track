@@ -1,6 +1,10 @@
 # graph-problem-mastery-track
 A repository to practice graph theory and problems 
 
+## Algorithm Documentation
+
+Algorithm notes and explanations live in the `docs/algorithms/` folder, organized by topic (e.g. `docs/algorithms/mst.md`, `docs/algorithms/scc.md`, `docs/algorithms/bellman-ford.md`, `docs/algorithms/kahns-algorithm.md`, `docs/algorithms/topological-ordering.md`).
+
 ## Maven setup
 
 This repository is now a simple Maven Java project.
