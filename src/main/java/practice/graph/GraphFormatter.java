@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-public final class GraphFormatter {
+final class GraphFormatter {
 
     private static final Logger LOGGER = Logger.getLogger(GraphFormatter.class.getName());
 

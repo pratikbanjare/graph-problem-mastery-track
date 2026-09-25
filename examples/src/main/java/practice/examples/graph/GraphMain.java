@@ -1,4 +1,6 @@
-package practice.graph;
+package practice.examples.graph;
+
+import practice.graph.Graph;
 
 public class GraphMain {
 

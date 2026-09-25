@@ -158,13 +158,6 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.13</version>
-                <configuration>
-                    <!-- Demo/launcher classes (main() only) are not part of the library's public API -->
-                    <excludes>
-                        <exclude>**/Main.class</exclude>
-                        <exclude>**/GraphMain.class</exclude>
-                    </excludes>
-                </configuration>
                 <executions>
                     <execution>
                         <id>jacoco-prepare-agent</id>
