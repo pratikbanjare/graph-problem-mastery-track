@@ -4,6 +4,17 @@ Before writing graph algorithms, first learn what a graph is and how a
 computer stores one. The `Graph` class in this repository will be our running
 example.
 
+## Index
+
+1. [Start with a familiar problem](#1-start-with-a-familiar-problem)
+2. [Understand an edge before storing it](#2-understand-an-edge-before-storing-it)
+3. [Add meaning to an edge with a weight](#3-add-meaning-to-an-edge-with-a-weight)
+4. [Decide how to store the graph](#4-decide-how-to-store-the-graph)
+5. [Connect the representation to `Graph.java`](#5-connect-the-representation-to-graphjava)
+6. [Follow the life of an edge](#6-follow-the-life-of-an-edge)
+7. [Why this matters for algorithms](#7-why-this-matters-for-algorithms)
+8. [Your implementation task](#8-your-implementation-task)
+
 ## 1. Start with a familiar problem
 
 Imagine four places connected by roads:
