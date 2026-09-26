@@ -5,17 +5,17 @@ import org.junit.jupiter.api.Test;
 import practice.exception.GraphException;
 import practice.graph.Graph;
 
-class FlyodWarshallTest {
+class FloydWarshallTest {
 
     @Test()
-    void testFlyodWarshallAlgorithm3() {
+    void testFloydWarshallAlgorithm3() {
         Graph graph  = new Graph(3);
         graph.addEdge(1,2,3);
         graph.addEdge(2,3,-4);
         graph.addEdge(3,1,0);
 
-        FlyodWarshall algo   = new FlyodWarshall();
-        Assertions.assertThrows(GraphException.class, () -> algo.flyodWarshallAlgorithm(graph));
+        FloydWarshall algo   = new FloydWarshall();
+        Assertions.assertThrows(GraphException.class, () -> algo.floydWarshallAlgorithm(graph));
 
     }
 }

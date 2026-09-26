@@ -9,11 +9,8 @@ import practice.model.WeightedEdge;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.logging.Logger;
 
 public class Graph {
-
-    private static final Logger LOGGER = Logger.getLogger(Graph.class.getName());
 
     private int vertices;
     private GraphType graphType;
@@ -25,7 +22,16 @@ public class Graph {
     }
 
     public Graph(int vertices, GraphType graphType) {
-        // write your code here
+        if (vertices <= 0) {
+            throw new GraphException("Invalid Vertices");
+        }
+        this.graphType = Objects.requireNonNull(graphType, "Graph type must not be null");
+        this.vertices = vertices;
+        weightedAdjacencyList = new ArrayList<>();
+        edges = new ArrayList<>();
+        for (int i = 0; i < this.vertices; ++i) {
+            this.weightedAdjacencyList.add(new ArrayList<>());
+        }
     }
 
     public int getVertexCount() {
