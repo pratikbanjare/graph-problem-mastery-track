@@ -9,11 +9,8 @@ import practice.model.WeightedEdge;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.logging.Logger;
 
 public class Graph {
-
-    private static final Logger LOGGER = Logger.getLogger(Graph.class.getName());
 
     private final int vertices;
     private final GraphType graphType;
@@ -83,8 +80,7 @@ public class Graph {
         validateVertexOrThrow(v);
 
         if (hasEdge(u, v)) {
-            LOGGER.warning("Edge already exists");
-            return;
+            throw new GraphException("Edge already exists between " + u + " and " + v);
         }
 
         this.weightedAdjacencyList.get(getVertexPos(u)).add(new WeightedEdge(v, weight));
@@ -106,6 +102,9 @@ public class Graph {
     public void removeEdge(int v1, int v2) {
         validateVertexOrThrow(v1);
         validateVertexOrThrow(v2);
+        if (!hasEdge(v1, v2)) {
+            throw new GraphException("Edge does not exist between " + v1 + " and " + v2);
+        }
 
         this.removeFromAdjacencyList(v1, v2);
         if (this.graphType == GraphType.UNDIRECTED) {

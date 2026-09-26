@@ -2,8 +2,6 @@ package practice.graph;
 
 public class GraphCycleDetector {
 
-    private static final String DFS = "[DFS] ";
-
     public boolean cycleDetector(Graph graph){
 
         int[] state = new int[graph.getVertexCount() + 1];
@@ -19,12 +17,8 @@ public class GraphCycleDetector {
     }
 
     private boolean cycleDetector(Graph graph, int vertex, int[] state){
-
-        System.out.println(DFS + "[START] State of vertex " + vertex + " is " + state[vertex]);
         state[vertex] = 1;
-        System.out.println(DFS + "[STATE CHANGE] Changed state of vertex " + vertex  + " to " + state[vertex]);
         for ( int neighbor : graph.getEdgesOfVertex(vertex)){
-            System.out.println(DFS + "[Neighbor] Processing neighbor " + neighbor);
             if (state[neighbor] == 1){
                 return true;
             } else if (state[neighbor] == 0) {
@@ -34,7 +28,6 @@ public class GraphCycleDetector {
             }
         }
         state[vertex] = 2;
-        System.out.println(DFS + "[END] State of vertex " + vertex + " is " + state[vertex]);
 
         return false;
     }
@@ -53,12 +46,8 @@ public class GraphCycleDetector {
     }
 
     private boolean dfsCycle(Graph graph, int vertex, int[] state){
-
-        System.out.println(DFS + "[START] State of vertex " + vertex + " is " + state[vertex]);
         state[vertex] = 1;
-        System.out.println(DFS + "[STATE CHANGE] Changed state of vertex " + vertex  + " to " + state[vertex]);
         for ( int neighbor : graph.getEdgesOfVertex(vertex)){
-            System.out.println(DFS + "[Neighbor] Processing neighbor " + neighbor);
             if (state[neighbor] == 1){
                 return true;
             } else if (state[neighbor] == 0) {
@@ -68,11 +57,9 @@ public class GraphCycleDetector {
             }
         }
         state[vertex] = 2;
-        System.out.println(DFS + "[END] State of vertex " + vertex + " is " + state[vertex]);
 
         return false;
     }
 
 }
-
 
