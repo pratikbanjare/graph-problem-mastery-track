@@ -1,4 +1,4 @@
-package practice.scheduler
+package practice.scheduler;
 
 import io.cucumber.junit.platform.engine.Constants;
 import org.junit.platform.suite.api.ConfigurationParameter;

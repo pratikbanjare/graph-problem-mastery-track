@@ -23,7 +23,7 @@ VERSION=$(mvn -q -f pom.xml help:evaluate -Dexpression=project.version -DforceSt
 echo "Verifying library consumption for ${GROUP_ID}:${ARTIFACT_ID}:${VERSION}"
 
 echo "==> Installing artifact into local Maven repository"
-mvn -B -q install -DskipTests -Dmaven.source.skip=true -Dmaven.javadoc.skip=true
+mvn -B -q install -DskipTests -Djacoco.skip=true -Dmaven.source.skip=true -Dmaven.javadoc.skip=true
 
 CONSUMER_DIR=$(mktemp -d)
 trap 'rm -rf "$CONSUMER_DIR"' EXIT
@@ -97,5 +97,13 @@ EOF
 
 echo "==> Compiling and running consumer project against the published artifact"
 mvn -B -q -f "$CONSUMER_DIR/pom.xml" compile exec:java
+
+echo "==> Verifying compile-scope dependency tree is free of Kotlin"
+DEPENDENCY_TREE_OUTPUT=$(mvn -B -q -f "$CONSUMER_DIR/pom.xml" dependency:tree -Dscope=compile)
+echo "$DEPENDENCY_TREE_OUTPUT"
+if grep -q 'org.jetbrains.kotlin' <<<"$DEPENDENCY_TREE_OUTPUT"; then
+  echo "Unexpected Kotlin dependency found in compile-scope dependency tree" >&2
+  exit 1
+fi
 
 echo "==> Library consumption check succeeded"
