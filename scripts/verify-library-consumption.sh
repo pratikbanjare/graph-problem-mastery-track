@@ -23,7 +23,7 @@ VERSION=$(mvn -q -f pom.xml help:evaluate -Dexpression=project.version -DforceSt
 echo "Verifying library consumption for ${GROUP_ID}:${ARTIFACT_ID}:${VERSION}"
 
 echo "==> Installing artifact into local Maven repository"
-mvn -B -q install -DskipTests -Dmaven.source.skip=true -Dmaven.javadoc.skip=true
+mvn -B -q install -DskipTests -Djacoco.skip=true -Dmaven.source.skip=true -Dmaven.javadoc.skip=true
 
 CONSUMER_DIR=$(mktemp -d)
 trap 'rm -rf "$CONSUMER_DIR"' EXIT
