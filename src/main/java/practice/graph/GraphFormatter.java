@@ -22,7 +22,8 @@ public final class GraphFormatter {
                     .append(", ")
                     .append(edge.getWeight())
                     .append(")"));
+            graphDescription.append("]");
         }
-        return graphDescription.append("]").toString();
+        return graphDescription.toString();
     }
 }

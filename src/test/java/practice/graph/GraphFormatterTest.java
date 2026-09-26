@@ -13,7 +13,7 @@ class GraphFormatterTest {
 
         GraphFormatter formatter = new GraphFormatter();
 
-        assertEquals(System.lineSeparator() + "For vertex 1 neighbors are -[ (2, 5)"
+        assertEquals(System.lineSeparator() + "For vertex 1 neighbors are -[ (2, 5)]"
                         + System.lineSeparator() + "For vertex 2 neighbors are -[ (1, 5)]",
                 formatter.toDebugString(graph));
     }
