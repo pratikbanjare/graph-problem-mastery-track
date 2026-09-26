@@ -1,4 +1,4 @@
-package practice.graph.bdd;
+package chapter.topic_06;
 
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
@@ -8,12 +8,22 @@ import io.cucumber.java.en.When;
 import org.junit.jupiter.api.Assertions;
 import practice.graph.Graph;
 import practice.graph.TopologicalSortAlgorithm;
+import practice.model.Edge;
+import practice.model.GraphType;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.logging.Logger;
 
 
 public class TopologicalSortSteps {
 
+    private static final Logger LOGGER = Logger.getLogger(TopologicalSortSteps.class.getName());
     private Graph graph;
     private List<Integer> result;
     private Throwable thrownException;
@@ -46,9 +56,10 @@ public class TopologicalSortSteps {
     private void setGraphFromVertices(List<Integer> vertices) {
         int maxVertex = vertices.stream().max(Integer::compareTo).orElse(0);
 
-        this.graph = new Graph(maxVertex, practice.model.GraphType.DIRECTED);
+        this.graph = new Graph(maxVertex, GraphType.DIRECTED);
         this.result = null;
         this.thrownException = null;
+        LOGGER.info("Created directed graph with vertices 1 through " + maxVertex);
     }
 
     @And("the following edges:")
@@ -60,6 +71,7 @@ public class TopologicalSortSteps {
             int to = Integer.parseInt(row.get("to"));
             graph.addEdge(from, to);
         }
+        LOGGER.info("Added graph edges: " + describeGraph());
     }
 
     @When("the topological sort is calculated")
@@ -67,56 +79,80 @@ public class TopologicalSortSteps {
         try {
             TopologicalSortAlgorithm algorithm = new TopologicalSortAlgorithm();
             this.result = algorithm.dfsTopologicalSort(graph);
+            LOGGER.info("DFS topological sort result for " + describeGraph() + ": " + result);
         } catch (Exception e) {
             this.thrownException = e;
+            LOGGER.info("DFS topological sort failed for " + describeGraph() + ": "
+                    + e.getClass().getSimpleName() + ": " + e.getMessage());
         }
     }
 
     @Then("the result should contain each vertex exactly once")
     public void theResultShouldContainEachVertexExactlyOnce() {
-        Assertions.assertNotNull(result, "Topological sort result should not be null.");
-        Assertions.assertEquals(graph.getVertexCount(), result.size(),
-                "Result size should equal the number of vertices.");
-
+        String graphDescription = describeGraph();
+        LOGGER.info("Checking vertex membership for graph " + graphDescription + "; result=" + result);
+        Assertions.assertNotNull(result,
+                "Topological sort result should not be null for graph " + graphDescription + ".");
         Set<Integer> uniqueValues = new HashSet<>(result);
+        List<Integer> missingVertices = new ArrayList<>();
+        for (int vertex = 1; vertex <= graph.getVertexCount(); vertex++) {
+            if (!result.contains(vertex)) {
+                missingVertices.add(vertex);
+            }
+        }
+        LOGGER.info("Vertex membership details: expectedCount=" + graph.getVertexCount()
+                + ", actualCount=" + result.size() + ", uniqueCount=" + uniqueValues.size()
+                + ", missingVertices=" + missingVertices);
+        Assertions.assertEquals(graph.getVertexCount(), result.size(),
+                "Result size should equal the number of vertices for graph " + graphDescription
+                        + "; result=" + result + ".");
         Assertions.assertEquals(graph.getVertexCount(), uniqueValues.size(),
-                "Result should contain each vertex exactly once.");
+                "Result should contain each vertex exactly once for graph " + graphDescription
+                        + "; result=" + result + ".");
 
         for (int vertex = 1; vertex <= graph.getVertexCount(); vertex++) {
             Assertions.assertTrue(result.contains(vertex),
-                    "Missing vertex " + vertex + " in topological order.");
+                    "Missing vertex " + vertex + " in topological order for graph "
+                            + graphDescription + "; result=" + result + ".");
         }
     }
 
     @And("for every edge in the graph, the source vertex appears before the target vertex")
     public void forEveryEdgeTheSourceAppearsBeforeTheTarget() {
-        Assertions.assertNotNull(result, "Topological sort result should not be null.");
+        String graphDescription = describeGraph();
+        LOGGER.info("Checking edge ordering for graph " + graphDescription + "; result=" + result);
+        Assertions.assertNotNull(result,
+                "Topological sort result should not be null for graph " + graphDescription + ".");
 
         for (int source = 1; source <= graph.getVertexCount(); source++) {
-            List<Integer> neighbors = graph.getEdgesOfVertex(source );
+            List<Integer> neighbors = graph.getEdgesOfVertex(source);
 
             for (int neighbor : neighbors) {
-                int target = neighbor;
-
                 int sourceIndex = result.indexOf(source);
-                int targetIndex = result.indexOf(target);
-
+                int targetIndex = result.indexOf(neighbor);
+                LOGGER.info("Checking edge " + source + " -> " + neighbor + ": sourceIndex="
+                        + sourceIndex + ", targetIndex=" + targetIndex);
                 Assertions.assertTrue(sourceIndex < targetIndex,
-                        "Edge " + source + " -> " + target + " is violated: " +
+                        "Edge " + source + " -> " + neighbor + " is violated: " +
                                 source + " appears at index " + sourceIndex +
-                                " and " + target + " appears at index " + targetIndex);
+                                " and " + neighbor + " appears at index " + targetIndex
+                                + " in result " + result + ".");
             }
         }
     }
 
     @And("vertex {int} should appear before both {int} and {int}")
     public void vertexShouldAppearBeforeBoth(int vertex, int firstTarget, int secondTarget) {
+        LOGGER.info("Checking that vertex " + vertex + " precedes " + firstTarget + " and "
+                + secondTarget + "; result=" + result);
         Assertions.assertNotNull(result, "Topological sort result should not be null.");
 
         Assertions.assertTrue(result.indexOf(vertex) < result.indexOf(firstTarget),
-                "Vertex " + vertex + " should appear before " + firstTarget);
+                "Vertex " + vertex + " should appear before " + firstTarget
+                        + " in result " + result + ".");
         Assertions.assertTrue(result.indexOf(vertex) < result.indexOf(secondTarget),
-                "Vertex " + vertex + " should appear before " + secondTarget);
+                "Vertex " + vertex + " should appear before " + secondTarget
+                        + " in result " + result + ".");
     }
 
     @And("the ordering should still include all disconnected components in one valid overall sequence")
@@ -127,17 +163,40 @@ public class TopologicalSortSteps {
 
     @Then("it should fail with an IllegalArgumentException")
     public void itShouldFailWithAnIllegalArgumentException() {
+        LOGGER.info("Checking expected IllegalArgumentException; actual exception="
+                + describeException());
         Assertions.assertNotNull(thrownException, "Expected an IllegalArgumentException but none was thrown.");
         Assertions.assertTrue(thrownException instanceof IllegalArgumentException,
-                "Expected IllegalArgumentException but got: " + thrownException.getClass().getSimpleName());
+                "Expected IllegalArgumentException but got: " + describeException());
     }
 
     @And("the error message should mention a cycle is detected")
     public void theErrorMessageShouldMentionACycleIsDetected() {
+        LOGGER.info("Checking that exception message mentions a cycle; actual exception="
+                + describeException());
         Assertions.assertNotNull(thrownException, "Expected an exception to be thrown.");
         Assertions.assertTrue(thrownException.getMessage() != null &&
                         thrownException.getMessage().toLowerCase().contains("cycle"),
                 "Expected exception message to mention a cycle, but got: " +
-                        (thrownException.getMessage() == null ? "null" : thrownException.getMessage()));
+                        (thrownException.getMessage() == null ? "null" : thrownException.getMessage())
+                        + " from " + describeException());
+    }
+
+    private String describeGraph() {
+        if (graph == null) {
+            return "<graph not initialized>";
+        }
+        List<String> edges = new ArrayList<>();
+        for (Edge edge : graph.getEdges()) {
+            edges.add(edge.getFrom() + " -> " + edge.getTo());
+        }
+        return "vertices=1.." + graph.getVertexCount() + ", edges=" + edges;
+    }
+
+    private String describeException() {
+        if (thrownException == null) {
+            return "<none>";
+        }
+        return thrownException.getClass().getSimpleName() + ": " + thrownException.getMessage();
     }
 }

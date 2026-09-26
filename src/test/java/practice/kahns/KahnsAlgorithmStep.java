@@ -9,7 +9,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import practice.exception.GraphException;
 import practice.graph.Graph;
-import practice.graph.TopologicalSortAlgorithm;
+import practice.graph.KahnsAlgorithm;
 import practice.model.GraphType;
 
 import java.util.List;
@@ -19,14 +19,14 @@ import java.util.stream.Collectors;
 public class KahnsAlgorithmStep {
 
     private Graph graph;
-    private TopologicalSortAlgorithm topologicalSortAlgorithm;
+    private KahnsAlgorithm kahnsAlgorithm;
     private List<Integer> actualOrder;
     private GraphException thrownException;
 
     @Given("a directed graph with {int} number of vertices")
     public void givenADirectedGraphWithNumberOfVertices(int vertices) {
         graph = new Graph(vertices, GraphType.DIRECTED);
-        topologicalSortAlgorithm = new TopologicalSortAlgorithm();
+        kahnsAlgorithm = new KahnsAlgorithm();
         actualOrder = null;
         thrownException = null;
     }
@@ -43,7 +43,7 @@ public class KahnsAlgorithmStep {
     @When("kahns algorithm is called")
     public void whenKahnsAlgorithmIsCalled() {
         try {
-            actualOrder = topologicalSortAlgorithm.kahnsAlgorithm(graph);
+            actualOrder = kahnsAlgorithm.kahnsAlgorithm(graph);
         } catch (GraphException e) {
             thrownException = e;
         }
