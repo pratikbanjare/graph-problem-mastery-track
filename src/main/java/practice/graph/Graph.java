@@ -56,14 +56,6 @@ public class Graph {
         return this.graphType;
     }
 
-    public boolean validateVertex(int vertex) {
-        return vertex >= 1 && vertex <= this.vertices;
-    }
-
-    private int getVertexPos(int v) {
-        return v - 1;
-    }
-
     public void addEdge(int u, int v) {
         this.addEdge(u, v, 0);
     }
@@ -78,19 +70,6 @@ public class Graph {
     }
 
     public void removeEdge(int v1, int v2) {
-        // write your code here
-    }
-
-    private boolean isEdge(Edge edge, int from, int to) {
-        // write your code here
-        return false;
-    }
-
-    private void removeFromAdjacencyList(int from, int to) {
-        // write your code here
-    }
-
-    private void validateVertexOrThrow(int vertex) {
         // write your code here
     }
 

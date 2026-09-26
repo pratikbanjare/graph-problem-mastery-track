@@ -274,3 +274,5 @@ The test class is located at
 that the implementation covered by these scenarios is correct. If a scenario
 fails, read its expected and actual values and the diagnostic logs to identify
 which part of `Graph.java` needs attention.
+
+Feel free to use `GraphTest.java` class to write your own custom test for validation.
