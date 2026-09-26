@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class TopologlcaSortAlgorithmTest {
+public class TopologicalSortAlgorithmTest {
 
 
     private TopologicalSortAlgorithm algo;

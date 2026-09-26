@@ -8,7 +8,7 @@ import org.junit.platform.suite.api.Suite;
 
 @Suite
 @IncludeEngines("cucumber")
-@SelectClasspathResource("features/flyodwarshall")
-@ConfigurationParameter(key = Constants.GLUE_PROPERTY_NAME, value = "practice.path.flyodwarshall")
-public class FlyodWarshallBddTest {
+@SelectClasspathResource("features/floydwarshall")
+@ConfigurationParameter(key = Constants.GLUE_PROPERTY_NAME, value = "practice.path.floydwarshall")
+public class FloydWarshallBddTest {
 }

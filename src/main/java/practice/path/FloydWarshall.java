@@ -6,9 +6,9 @@ import practice.model.WeightedEdge;
 
 import java.util.Arrays;
 
-public class FlyodWarshall {
+public class FloydWarshall {
 
-    public int[][] flyodWarshallAlgorithm(Graph graph) throws GraphException {
+    public int[][] floydWarshallAlgorithm(Graph graph) throws GraphException {
         int[][] distance = initializeDistance(graph);
         int vertexCount = graph.getVertexCount();
         for (int k = 1; k <= vertexCount; ++k){

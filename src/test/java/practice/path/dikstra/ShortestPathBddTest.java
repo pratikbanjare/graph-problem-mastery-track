@@ -11,5 +11,5 @@ import org.junit.platform.suite.api.Suite;
 @IncludeEngines("cucumber")
 @SelectClasspathResource("features/shortestPath")
 @ConfigurationParameter(key = Constants.GLUE_PROPERTY_NAME, value = "practice.path.dikstra")
-public class ShorttestPathBddTest {
+public class ShortestPathBddTest {
 }
