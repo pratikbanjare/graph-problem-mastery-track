@@ -1,4 +1,4 @@
-package practice.path.flyodwarshall;
+package practice.path.floydwarshall;
 
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
@@ -8,12 +8,12 @@ import org.junit.jupiter.api.Assertions;
 import practice.exception.GraphException;
 import practice.graph.Graph;
 import practice.model.GraphType;
-import practice.path.FlyodWarshall;
+import practice.path.FloydWarshall;
 
 import java.util.List;
 import java.util.Map;
 
-public class FlyodWarshallSteps {
+public class FloydWarshallSteps {
 
     private Graph graph;
     private int[][] distances;
@@ -44,7 +44,7 @@ public class FlyodWarshallSteps {
     @When("I run Floyd-Warshall on the graph")
     public void iRunFloydWarshallOnTheGraph() {
         try {
-            distances = new FlyodWarshall().flyodWarshallAlgorithm(graph);
+            distances = new FloydWarshall().floydWarshallAlgorithm(graph);
             thrownException = null;
         } catch (GraphException e) {
             thrownException = e;

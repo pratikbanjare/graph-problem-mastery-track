@@ -11,25 +11,24 @@ import java.util.Arrays;
 import java.util.List;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class TopologlcaSortAlgorithmTest {
+class TopologicalSortAlgorithmTest {
 
 
     private TopologicalSortAlgorithm algo;
 
     @BeforeAll
-    public void init() {
+    void init() {
         algo =  new TopologicalSortAlgorithm();
     }
 
     @Test
-    public void testTopologicalOrder() {
+    void testTopologicalOrder() {
         Graph graph = new Graph(4, GraphType.DIRECTED);
         graph.addEdge(1, 2);
         graph.addEdge(1,3);
         graph.addEdge(2,4);
         graph.addEdge(3,4);
 
-        TopologicalSortAlgorithm algo = new TopologicalSortAlgorithm();
         List<Integer> order = algo.dfsTopologicalSort(graph);
 
         List<Integer> expected = Arrays.asList(1, 3, 2, 4);
@@ -38,7 +37,7 @@ public class TopologlcaSortAlgorithmTest {
     }
 
     @Test
-    public void testTopologicalOrder2() {
+    void testTopologicalOrder2() {
         Graph graph = new Graph(4, GraphType.DIRECTED);
         graph.addEdge(1, 2);
         graph.addEdge(1,3);
@@ -49,7 +48,7 @@ public class TopologlcaSortAlgorithmTest {
     }
 
     @Test
-    public void kahnsAlgorithmTest() {
+    void kahnsAlgorithmTest() {
         Graph graph = new Graph(4, GraphType.DIRECTED);
 
         graph.addEdge(1,3);
@@ -67,7 +66,7 @@ public class TopologlcaSortAlgorithmTest {
     }
 
     @Test
-    public void kahnsAlgorithmTest2() {
+    void kahnsAlgorithmTest2() {
         Graph graph = new Graph(4, GraphType.DIRECTED);
         graph.addEdge(1,3);
         graph.addEdge(2,3);
