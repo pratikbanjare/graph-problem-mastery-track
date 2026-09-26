@@ -102,12 +102,21 @@ public class Graph {
     public void removeEdge(int v1, int v2) {
         validateVertexOrThrow(v1);
         validateVertexOrThrow(v2);
-        if (!this.removeFromAdjacencyList(v1, v2)) {
+        WeightedEdge forwardEdge = findEdge(v1, v2);
+        if (forwardEdge == null) {
             throw new GraphException("Edge does not exist between " + v1 + " and " + v2);
         }
-
+        WeightedEdge reverseEdge = null;
         if (this.graphType == GraphType.UNDIRECTED) {
-            this.removeFromAdjacencyList(v2, v1);
+            reverseEdge = findEdge(v2, v1);
+            if (reverseEdge == null) {
+                throw new GraphException("Edge does not exist between " + v1 + " and " + v2);
+            }
+        }
+
+        this.weightedAdjacencyList.get(getVertexPos(v1)).remove(forwardEdge);
+        if (this.graphType == GraphType.UNDIRECTED) {
+            this.weightedAdjacencyList.get(getVertexPos(v2)).remove(reverseEdge);
         }
         this.edges.removeIf(edge -> isEdge(edge, v1, v2));
     }
@@ -118,9 +127,12 @@ public class Graph {
                 && edge.getFrom() == to && edge.getTo() == from);
     }
 
-    private boolean removeFromAdjacencyList(int from, int to) {
+    private WeightedEdge findEdge(int from, int to) {
         return this.weightedAdjacencyList.get(getVertexPos(from))
-                .removeIf(edge -> edge.getTo() == to);
+                .stream()
+                .filter(edge -> edge.getTo() == to)
+                .findFirst()
+                .orElse(null);
     }
 
     private void validateVertexOrThrow(int vertex) {
