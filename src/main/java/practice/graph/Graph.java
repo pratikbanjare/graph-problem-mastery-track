@@ -9,11 +9,8 @@ import practice.model.WeightedEdge;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.logging.Logger;
 
 public class Graph {
-
-    private static final Logger LOGGER = Logger.getLogger(Graph.class.getName());
 
     private final int vertices;
     private final GraphType graphType;
@@ -83,8 +80,7 @@ public class Graph {
         validateVertexOrThrow(v);
 
         if (hasEdge(u, v)) {
-            LOGGER.warning("Edge already exists");
-            return;
+            throw new GraphException("Edge already exists between " + u + " and " + v);
         }
 
         this.weightedAdjacencyList.get(getVertexPos(u)).add(new WeightedEdge(v, weight));
@@ -106,10 +102,21 @@ public class Graph {
     public void removeEdge(int v1, int v2) {
         validateVertexOrThrow(v1);
         validateVertexOrThrow(v2);
-
-        this.removeFromAdjacencyList(v1, v2);
+        WeightedEdge forwardEdge = findEdge(v1, v2);
+        if (forwardEdge == null) {
+            throw new GraphException("Edge does not exist between " + v1 + " and " + v2);
+        }
+        WeightedEdge reverseEdge = null;
         if (this.graphType == GraphType.UNDIRECTED) {
-            this.removeFromAdjacencyList(v2, v1);
+            reverseEdge = findEdge(v2, v1);
+            if (reverseEdge == null) {
+                throw new GraphException("Edge does not exist between " + v1 + " and " + v2);
+            }
+        }
+
+        this.weightedAdjacencyList.get(getVertexPos(v1)).remove(forwardEdge);
+        if (this.graphType == GraphType.UNDIRECTED) {
+            this.weightedAdjacencyList.get(getVertexPos(v2)).remove(reverseEdge);
         }
         this.edges.removeIf(edge -> isEdge(edge, v1, v2));
     }
@@ -120,9 +127,12 @@ public class Graph {
                 && edge.getFrom() == to && edge.getTo() == from);
     }
 
-    private void removeFromAdjacencyList(int from, int to) {
-        this.weightedAdjacencyList.get(getVertexPos(from))
-                .removeIf(edge -> edge.getTo() == to);
+    private WeightedEdge findEdge(int from, int to) {
+        return this.weightedAdjacencyList.get(getVertexPos(from))
+                .stream()
+                .filter(edge -> edge.getTo() == to)
+                .findFirst()
+                .orElse(null);
     }
 
     private void validateVertexOrThrow(int vertex) {

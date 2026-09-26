@@ -32,13 +32,10 @@ public class KruskalAlgorithm {
         for (Edge edge : kruskalEdges) {
 
             if (union(edge.getFrom(), edge.getTo(), parent, rank)){
-                System.out.println("Edge from " + edge.getFrom() + " to " + edge.getTo() + " is accepted!!!");
                 kruskalEdgeList.add(edge);
                 if (++selectedEdges == graph.getVertexCount() - 1) {
                     break;
                 }
-            } else {
-                System.out.println("Edge from " + edge.getFrom() + " to " + edge.getTo() + " is Skipped!!!");
             }
         }
         if (selectedEdges < graph.getVertexCount()-1) {

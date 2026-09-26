@@ -2,6 +2,7 @@ package practice.graph;
 
 import org.junit.jupiter.api.Test;
 
+import practice.exception.GraphException;
 import practice.model.GraphType;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -30,14 +31,16 @@ class GraphTest {
     }
 
     @Test
-    void doesNotAddDuplicateEdges() {
+    void rejectsDuplicateEdges() {
         Graph graph = new Graph(2);
 
         graph.addEdge(1, 2);
-        graph.addEdge(1, 2);
+
+        GraphException exception = assertThrows(GraphException.class, () -> graph.addEdge(1, 2));
 
         assertTrue(graph.hasEdge(1, 2));
         assertTrue(graph.hasEdge(2, 1));
+        assertEquals("Edge already exists between 1 and 2", exception.getMessage());
     }
 
     @Test
@@ -70,6 +73,15 @@ class GraphTest {
 
         assertDoesNotThrow(() -> graph.addEdge(1, 3));
         assertTrue(graph.hasEdge(1, 3));
+    }
+
+    @Test
+    void rejectsRemovingMissingEdge() {
+        Graph graph = new Graph(3);
+
+        GraphException exception = assertThrows(GraphException.class, () -> graph.removeEdge(1, 2));
+
+        assertEquals("Edge does not exist between 1 and 2", exception.getMessage());
     }
 
     @Test

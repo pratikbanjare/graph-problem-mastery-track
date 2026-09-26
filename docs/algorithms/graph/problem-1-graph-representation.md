@@ -42,8 +42,8 @@ class Graph {
         // ...
     }
 
-    void printGraph() {
-        // ...
+    String toDebugString() {
+        // caller decides whether to print/log this
     }
 }
 ```
@@ -57,7 +57,7 @@ Your graph should:
 3. `addEdge(u, v)` creates an undirected edge.
 4. `hasEdge(u, v)` checks whether the edge exists.
 5. `removeEdge(u, v)` removes the edge.
-6. `printGraph()` displays every vertex and its neighbors.
+6. `toDebugString()` returns a diagnostic representation of every vertex and its neighbors.
 
 For example, something like:
 
@@ -67,6 +67,5 @@ For example, something like:
 2 -> 0 3
 3 -> 1 2
 ```
-
 
 
