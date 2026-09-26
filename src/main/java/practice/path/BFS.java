@@ -12,4 +12,8 @@ public class BFS {
         return null;
     }
 
+    public int shortestDistance(Graph graph, int source, int target) {
+        // write your code here
+        return 0;
+    }
 }
