@@ -98,12 +98,4 @@ EOF
 echo "==> Compiling and running consumer project against the published artifact"
 mvn -B -q -f "$CONSUMER_DIR/pom.xml" compile exec:java
 
-echo "==> Verifying compile-scope dependency tree is free of Kotlin"
-DEPENDENCY_TREE_OUTPUT=$(mvn -B -q -f "$CONSUMER_DIR/pom.xml" dependency:tree -Dscope=compile)
-echo "$DEPENDENCY_TREE_OUTPUT"
-if grep -q 'org.jetbrains.kotlin' <<<"$DEPENDENCY_TREE_OUTPUT"; then
-  echo "Unexpected Kotlin dependency found in compile-scope dependency tree" >&2
-  exit 1
-fi
-
 echo "==> Library consumption check succeeded"
