@@ -1,4 +1,4 @@
-package practice.graph.bdd;
+package chapter.topic_02;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -43,6 +43,12 @@ public class ConnectedComponentsSteps {
             }
             expected.add(component);
         }
-        assertEquals(expected, components);
+        String diagnostic = "Connected-components mismatch. Expected: " + expected
+                + "; actual: " + components
+                + ". Check that every vertex is scanned and marked visited when enqueued.";
+        if (!expected.equals(components)) {
+            System.err.println(diagnostic);
+        }
+        assertEquals(expected, components, diagnostic);
     }
 }

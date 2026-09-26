@@ -1,4 +1,4 @@
-package practice.graph;
+package chapter.topic_02;
 
 import io.cucumber.junit.platform.engine.Constants;
 import org.junit.platform.suite.api.ConfigurationParameter;
@@ -8,7 +8,7 @@ import org.junit.platform.suite.api.Suite;
 
 @Suite
 @IncludeEngines("cucumber")
-@SelectClasspathResource("features/graph")
-@ConfigurationParameter(key = Constants.GLUE_PROPERTY_NAME, value = "practice.graph.bdd")
+@SelectClasspathResource("features/chapter/topic_02")
+@ConfigurationParameter(key = Constants.GLUE_PROPERTY_NAME, value = "chapter.topic_02")
 class RunConnectedComponentsCucumberTest {
 }

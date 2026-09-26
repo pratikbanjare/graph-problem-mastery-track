@@ -4,7 +4,7 @@ A repository to practice graph theory and problems
 ## Supported algorithms
 - [Graph Representation](docs/algorithms/graph/problem-1-graph-representation.md)
 - [Bipartite Graph](docs/algorithms/graph/bipartite-graph.md)
-- [Breadth-First Search (BFS) - find connected componentes](docs/algorithms/graph/connected-components.md)
+- [Breadth-First Search (BFS) - find connected componentes](chapter/chapter-2-connected-components.md)
 - [Graph Cycle Detector](docs/algorithms/graph/graph-cycle-detector.md)
 - [Kahn's Algorithm](docs/algorithms/graph/kahns-algorithm.md)
 - [Bellman Ford's Algorithm](docs/algorithms/path/bellman-ford.md)

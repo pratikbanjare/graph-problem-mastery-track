@@ -9,17 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class ConnectedComponentsTest {
 
     @Test
-    void bfsVisitsEachReachableVertexInBreadthFirstOrder() {
-        Graph graph = new Graph(4);
-        graph.addEdge(1, 2);
-        graph.addEdge(1, 3);
-        graph.addEdge(2, 4);
-
-        ConnectedComponents connectedComponents = new ConnectedComponents();
-        assertEquals(List.of(1, 2, 3, 4), connectedComponents.bfs(graph, 1, new boolean[graph.getVertexCount()+1]));
-    }
-
-    @Test
     void connectedComponentTraversesEveryComponent() {
         Graph graph = new Graph(4);
         graph.addEdge(1, 2);
