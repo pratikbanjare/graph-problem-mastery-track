@@ -1,4 +1,4 @@
-package practice.path.bdd;
+package chapter.topic_03;
 
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
@@ -8,11 +8,14 @@ import practice.graph.Graph;
 import practice.path.BFS;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class BfsSteps {
+
+    private static final Logger LOGGER = Logger.getLogger(BfsSteps.class.getName());
 
     private Graph graph;
     private List<Integer> shortestPath;
@@ -30,11 +33,13 @@ public class BfsSteps {
 
     @When("I find the shortest BFS path from {int} to {int}")
     public void iFindTheShortestBfsPathFromTo(int source, int target) {
+        LOGGER.info(() -> "Finding shortest BFS path from " + source + " to " + target);
         shortestPath = new BFS().shortestDistancePath(graph, source, target);
     }
 
     @When("I measure the BFS shortest distance from {int} to {int}")
     public void iMeasureTheBfsShortestDistanceFromTo(int source, int target) {
+        LOGGER.info(() -> "Measuring BFS shortest distance from " + source + " to " + target);
         shortestDistance = new BFS().shortestDistance(graph, source, target);
     }
 
@@ -44,7 +49,9 @@ public class BfsSteps {
                 .filter(cell -> cell != null && !cell.isBlank())
                 .map(Integer::parseInt)
                 .toList();
-        assertEquals(expectedPath, shortestPath);
+        logAssertion("shortest path", expectedPath, shortestPath);
+        assertEquals(expectedPath, shortestPath,
+                "Expected shortest path " + expectedPath + " but was " + shortestPath);
     }
 
     @Then("the BFS path should form a valid traversal from {int} to {int}")
@@ -53,26 +60,43 @@ public class BfsSteps {
             return;
         }
 
-        assertEquals(source, shortestPath.get(0));
-        assertEquals(target, shortestPath.get(shortestPath.size() - 1));
+        logAssertion("path source", source, shortestPath.get(0));
+        assertEquals(source, shortestPath.get(0),
+                "Expected path to start at " + source + " but was " + shortestPath);
+        logAssertion("path target", target, shortestPath.get(shortestPath.size() - 1));
+        assertEquals(target, shortestPath.get(shortestPath.size() - 1),
+                "Expected path to end at " + target + " but was " + shortestPath);
         for (Integer vertex : shortestPath) {
-            assertFalse(vertex == null);
+            logAssertion("path vertex is non-null", false, vertex == null);
+            assertFalse(vertex == null, "Path contained a null vertex: " + shortestPath);
         }
     }
 
     @Then("the BFS path should use {int} edges")
     public void theBfsPathShouldUseEdges(int expectedEdges) {
         int actualEdges = shortestPath.isEmpty() ? 0 : shortestPath.size() - 1;
-        assertEquals(expectedEdges, actualEdges);
+        logAssertion("number of path edges", expectedEdges, actualEdges);
+        assertEquals(expectedEdges, actualEdges,
+                "Expected " + expectedEdges + " path edge(s) but was " + actualEdges
+                        + " for path " + shortestPath);
     }
 
     @Then("the BFS path should be empty")
     public void theBfsPathShouldBeEmpty() {
-        assertEquals(List.of(), shortestPath);
+        logAssertion("unreachable path", List.of(), shortestPath);
+        assertEquals(List.of(), shortestPath,
+                "Expected no path, but found " + shortestPath);
     }
 
     @Then("the BFS distance should be {int}")
     public void theBfsDistanceShouldBe(int expectedDistance) {
-        assertEquals(expectedDistance, shortestDistance);
+        logAssertion("shortest distance", expectedDistance, shortestDistance);
+        assertEquals(expectedDistance, shortestDistance,
+                "Expected shortest distance " + expectedDistance
+                        + " but was " + shortestDistance);
+    }
+
+    private void logAssertion(String subject, Object expected, Object actual) {
+        LOGGER.info(() -> "Checking " + subject + ": expected=" + expected + ", actual=" + actual);
     }
 }

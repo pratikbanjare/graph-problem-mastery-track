@@ -53,3 +53,10 @@ Feature: Find shortest paths with breadth-first search
       | 2 |
     And the BFS path should form a valid traversal from 2 to 2
     And the BFS path should use 0 edges
+
+  Scenario: Return zero distance when source and target are the same
+    Given a path graph with 3 vertices
+    And the path graph has an edge between 1 and 2
+    And the path graph has an edge between 2 and 3
+    When I measure the BFS shortest distance from 2 to 2
+    Then the BFS distance should be 0

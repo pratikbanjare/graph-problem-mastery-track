@@ -33,6 +33,7 @@ At the end of '.md' file, add a section to ask user to implement explained conce
 Explain the concepts using an example graph in 'md' file.
 Add indentation wherever required to make the 'md' file easy to read.
 After explanation of concepts, add bare minimum psudo code.
+At the beginning of 'md' file, add index section. 
 In 'step definition' file, add logs to help user understand the cause of assertion failure.
 User should perform run of ''BDD test' file.
 The success of 'BDD test' will tell user that the implementation of of missing section in 'implementation' class is correct.
