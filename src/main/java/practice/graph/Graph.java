@@ -102,11 +102,10 @@ public class Graph {
     public void removeEdge(int v1, int v2) {
         validateVertexOrThrow(v1);
         validateVertexOrThrow(v2);
-        if (!hasEdge(v1, v2)) {
+        if (!this.removeFromAdjacencyList(v1, v2)) {
             throw new GraphException("Edge does not exist between " + v1 + " and " + v2);
         }
 
-        this.removeFromAdjacencyList(v1, v2);
         if (this.graphType == GraphType.UNDIRECTED) {
             this.removeFromAdjacencyList(v2, v1);
         }
@@ -119,8 +118,8 @@ public class Graph {
                 && edge.getFrom() == to && edge.getTo() == from);
     }
 
-    private void removeFromAdjacencyList(int from, int to) {
-        this.weightedAdjacencyList.get(getVertexPos(from))
+    private boolean removeFromAdjacencyList(int from, int to) {
+        return this.weightedAdjacencyList.get(getVertexPos(from))
                 .removeIf(edge -> edge.getTo() == to);
     }
 
