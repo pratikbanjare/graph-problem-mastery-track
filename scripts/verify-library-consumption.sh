@@ -22,8 +22,11 @@ VERSION=$(mvn -q -f pom.xml help:evaluate -Dexpression=project.version -DforceSt
 
 echo "Verifying library consumption for ${GROUP_ID}:${ARTIFACT_ID}:${VERSION}"
 
-echo "==> Installing artifact into local Maven repository"
-mvn -B -q install -DskipTests -Dmaven.source.skip=true -Dmaven.javadoc.skip=true
+echo "==> Packaging and installing main artifact into local Maven repository"
+mvn -B -q -DskipTests compile jar:jar
+mvn -B -q org.apache.maven.plugins:maven-install-plugin:3.1.2:install-file \
+  -Dfile="target/${ARTIFACT_ID}-${VERSION}.jar" \
+  -DpomFile=pom.xml
 
 CONSUMER_DIR=$(mktemp -d)
 trap 'rm -rf "$CONSUMER_DIR"' EXIT
