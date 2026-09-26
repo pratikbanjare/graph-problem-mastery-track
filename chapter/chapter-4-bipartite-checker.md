@@ -75,7 +75,7 @@ Group 2 (color 0): 2, 4
 
 ## How the implementation maps to the idea
 
-* Open `src/main/java/practice/graph/BipartiteChecker.java` while reading.
+* Open `../src/main/java/practice/graph/BipartiteChecker.java` while reading.
 * `isBipartite`:
   * Creates the color array.
   * Fills it with `-1`.
@@ -116,7 +116,7 @@ return true
 * The step definitions are in
   `src/test/java/practice/bipartite/bdd/BipartiteCheckerSteps.java`.
 * The associated BDD feature is
-  `../../../src/test/resources/features/chapter/topic_04/bipartite_checker.feature`.
+  `../src/test/resources/features/chapter/topic_04/bipartite_checker.feature`.
 * Run the test with:
 
 ```bash
@@ -148,7 +148,7 @@ mvn -Dtest=practice.bipartite.BipartiteCheckerBddTest test
 ## Your implementation exercise
 
 * Implement the explained two-color BFS in
-  `src/main/java/practice/graph/BipartiteChecker.java`.
+  `../src/main/java/practice/graph/BipartiteChecker.java`.
 * Use `-1` for unvisited vertices.
 * Alternate between colors `0` and `1`.
 * Detect same-color neighbors.
