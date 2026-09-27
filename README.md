@@ -9,7 +9,7 @@ A repository to practice graph theory and problems
 - [Kahn's Algorithm](docs/algorithms/graph/kahns-algorithm.md)
 - [Bellman Ford's Algorithm](docs/algorithms/path/bellman-ford.md)
 - [DAG Shortest Path Algorithm](docs/algorithms/path/dag-shortest-path.md)
-- [Dijkstra's Algorithm](docs/algorithms/path/dijkstra-shortest-path-algorithm.md)
+- [Dijkstra's Algorithm](chapter/chapter-8-dijkstra-shortest-path-algorithm.md)
 - [Floyd-Warshall Algorithm](docs/algorithms/path/floyd-warshall.md)
 - [Strongly Connected Components (SSC)](docs/algorithms/scc/scc.md#strongly-connected-components)
   - [Kosaraju's Algorithm](docs/algorithms/scc/scc.md#kosarajus-algorithm)

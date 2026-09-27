@@ -1,5 +1,4 @@
-package practice.path.dikstra;
-
+package chapter.topic_08;
 
 import io.cucumber.junit.platform.engine.Constants;
 import org.junit.platform.suite.api.ConfigurationParameter;
@@ -9,7 +8,7 @@ import org.junit.platform.suite.api.Suite;
 
 @Suite
 @IncludeEngines("cucumber")
-@SelectClasspathResource("features/shortestPath")
-@ConfigurationParameter(key = Constants.GLUE_PROPERTY_NAME, value = "practice.path.dikstra")
-public class ShortestPathBddTest {
+@SelectClasspathResource("features/chapter/topic_08")
+@ConfigurationParameter(key = Constants.GLUE_PROPERTY_NAME, value = "chapter.topic_08")
+public class DijkstraShortestPathBddTest {
 }

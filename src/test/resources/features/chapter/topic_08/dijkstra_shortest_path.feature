@@ -1,8 +1,4 @@
-Feature: Shortest path computation for weighted graphs
-
-  As a graph consumer
-  I want to compute shortest distances and paths
-  So that I can find the cheapest route from a source to any target
+Feature: Dijkstra shortest path in a weighted graph
 
   Scenario: Calculate shortest distances from a source in a positive weighted graph
     Given a weighted graph with vertices 1 to 5
