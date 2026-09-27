@@ -21,6 +21,13 @@ Feature: Course scheduling
     Then it should confirm that all courses can be finished
     And it should return all courses in a valid order
 
+  Scenario: Empty course set is valid
+    Given there are 0 courses
+    And there are no prerequisite relationships
+    When the scheduler checks whether the courses can be completed
+    Then it should confirm that all courses can be finished
+    And it should return all courses in a valid order
+
   Scenario: Circular dependency prevents completion
     Given there are 2 courses
     And the prerequisite relationships are:
