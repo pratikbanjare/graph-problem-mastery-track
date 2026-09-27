@@ -1,4 +1,4 @@
-package practice.path.bellmanford;
+package chapter.topic_09;
 
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
@@ -77,6 +77,8 @@ public class BellmanFordStepDefinitions {
 
             int expectedDistance = parseDistanceValue(expectedValue);
 
+            System.out.printf("Checking vertex %d: expected=%d, actual=%d, all distances=%s%n",
+                    vertex, expectedDistance, actualDistances[vertex], formatDistances(actualDistances));
             Assertions.assertEquals(expectedDistance, actualDistances[vertex],
                     "Distance mismatch for vertex " + vertex);
         }
@@ -84,17 +86,23 @@ public class BellmanFordStepDefinitions {
 
     @Then("no exception should be thrown")
     public void no_exception_should_be_thrown() {
+        System.out.println("Checking that Bellman-Ford completed without an exception: "
+                + (thrownException == null ? "no exception" : thrownException.getMessage()));
         Assertions.assertNull(thrownException, "An exception was thrown unexpectedly.");
     }
 
     @Then("a GraphException should be thrown")
     public void a_graph_exception_should_be_thrown() {
+        System.out.println("Checking for a GraphException: "
+                + (thrownException == null ? "no exception" : thrownException.getMessage()));
         Assertions.assertNotNull(thrownException, "Expected GraphException but none was thrown.");
     }
 
     @And("the exception message should be {string}")
     public void the_exception_message_should_be(String expectedMessage) {
         Assertions.assertNotNull(thrownException, "No exception was thrown to verify.");
+        System.out.printf("Checking exception message: expected=\"%s\", actual=\"%s\"%n",
+                expectedMessage, thrownException.getMessage());
         Assertions.assertEquals(expectedMessage, thrownException.getMessage());
     }
 
@@ -103,5 +111,19 @@ public class BellmanFordStepDefinitions {
             return Integer.MAX_VALUE;
         }
         return Integer.parseInt(value);
+    }
+
+    private String formatDistances(int[] distances) {
+        if (distances == null) {
+            return "null";
+        }
+        StringBuilder formatted = new StringBuilder("[");
+        for (int vertex = 1; vertex < distances.length; vertex++) {
+            if (vertex > 1) {
+                formatted.append(", ");
+            }
+            formatted.append(vertex).append("=").append(distances[vertex]);
+        }
+        return formatted.append("]").toString();
     }
 }
