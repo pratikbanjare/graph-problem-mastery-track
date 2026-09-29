@@ -87,3 +87,15 @@ Feature: Finding strongly connected components with Kosaraju's algorithm
       | 1,2       |
       | 3,4       |
       | 5         |
+
+  Scenario: Keep isolated vertices separate from nontrivial components
+    Given a directed graph with 4 vertices and the following edges:
+      | from | to |
+      | 1    | 2  |
+      | 2    | 1  |
+    When I find the strongly connected components
+    Then the strongly connected components should be:
+      | component |
+      | 1,2       |
+      | 3         |
+      | 4         |
