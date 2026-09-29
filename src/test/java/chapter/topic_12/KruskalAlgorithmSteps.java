@@ -1,4 +1,4 @@
-package practice.mst.kruskal;
+package chapter.topic_12;
 
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
@@ -12,12 +12,15 @@ import practice.mst.KruskalAlgorithm;
 
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class KruskalAlgorithmSteps {
+
+    private static final Logger LOGGER = Logger.getLogger(KruskalAlgorithmSteps.class.getName());
 
     private Graph graph;
     private List<Edge> minimumSpanningTree;
@@ -27,12 +30,14 @@ public class KruskalAlgorithmSteps {
     public void anUndirectedGraphWithVertices(int vertices) {
         graph = new Graph(vertices, GraphType.UNDIRECTED);
         resetResult();
+        LOGGER.info("Created undirected graph with " + vertices + " vertices");
     }
 
     @Given("a directed graph with {int} vertices")
     public void aDirectedGraphWithVertices(int vertices) {
         graph = new Graph(vertices, GraphType.DIRECTED);
         resetResult();
+        LOGGER.info("Created directed graph with " + vertices + " vertices");
     }
 
     @And("the graph has weighted edges")
@@ -43,22 +48,31 @@ public class KruskalAlgorithmSteps {
                     Integer.parseInt(row.get("to")),
                     Integer.parseInt(row.get("weight")));
         }
+        LOGGER.info("Added weighted edges: " + describeGraph());
     }
 
     @When("Kruskal's algorithm is called")
     public void kruskalsAlgorithmIsCalled() {
         try {
             minimumSpanningTree = new KruskalAlgorithm().minimumSpanningTree(graph);
+            thrownException = null;
+            LOGGER.info("Kruskal returned " + describeEdges(minimumSpanningTree));
         } catch (IllegalArgumentException exception) {
             thrownException = exception;
             minimumSpanningTree = null;
+            LOGGER.warning("Kruskal rejected graph " + describeGraph()
+                    + " with message: " + exception.getMessage());
         }
     }
 
     @Then("the minimum spanning tree contains {int} edges")
     public void theMinimumSpanningTreeContainsEdges(int expectedEdgeCount) {
+        String actual = minimumSpanningTree == null ? "null" : String.valueOf(minimumSpanningTree.size());
+        LOGGER.info("Checking MST edge count: expected=" + expectedEdgeCount
+                + ", actual=" + actual + ", selected=" + describeEdges(minimumSpanningTree));
         assertNotNull(minimumSpanningTree, "Kruskal's algorithm did not return an MST.");
-        assertEquals(expectedEdgeCount, minimumSpanningTree.size());
+        assertEquals(expectedEdgeCount, minimumSpanningTree.size(),
+                "Unexpected MST edge count for graph " + describeGraph());
     }
 
     @Then("the selected edges are")
@@ -71,44 +85,59 @@ public class KruskalAlgorithmSteps {
         List<EdgeValue> actualEdges = minimumSpanningTree.stream()
                 .map(edge -> new EdgeValue(edge.getFrom(), edge.getTo(), edge.getWeight()))
                 .toList();
+        LOGGER.info("Checking selected edges: expected=" + expectedEdges + ", actual=" + actualEdges
+                + ", graph=" + describeGraph());
 
-        assertEquals(expectedEdges, actualEdges);
+        assertEquals(expectedEdges, actualEdges,
+                "Selected MST edges differ for graph " + describeGraph());
     }
 
     @Then("the total weight of the minimum spanning tree is {int}")
     public void theTotalWeightOfTheMinimumSpanningTreeIs(int expectedWeight) {
         assertNotNull(minimumSpanningTree, "Kruskal's algorithm did not return an MST.");
 
-        int actualWeight = minimumSpanningTree.stream()
-                .mapToInt(Edge::getWeight)
-                .sum();
-        assertEquals(expectedWeight, actualWeight);
+        int actualWeight = minimumSpanningTree.stream().mapToInt(Edge::getWeight).sum();
+        LOGGER.info("Checking MST total weight: expected=" + expectedWeight + ", actual=" + actualWeight
+                + ", selected=" + describeEdges(minimumSpanningTree));
+        assertEquals(expectedWeight, actualWeight,
+                "Unexpected MST total weight for graph " + describeGraph());
     }
 
     @Then("the edge from {int} to {int} is not selected")
     public void theEdgeFromToIsNotSelected(int from, int to) {
         assertNotNull(minimumSpanningTree, "Kruskal's algorithm did not return an MST.");
-        assertTrue(minimumSpanningTree.stream()
-                        .noneMatch(edge -> edge.getFrom() == from && edge.getTo() == to),
-                "The edge from " + from + " to " + to + " was selected.");
+        boolean selected = minimumSpanningTree.stream()
+                .anyMatch(edge -> edge.getFrom() == from && edge.getTo() == to);
+        LOGGER.info("Checking rejected edge " + from + " -> " + to + ": selected=" + selected
+                + ", actual MST=" + describeEdges(minimumSpanningTree));
+        assertTrue(!selected, "The edge from " + from + " to " + to
+                + " was selected. MST=" + describeEdges(minimumSpanningTree));
     }
 
     @Then("an IllegalArgumentException is thrown")
     public void anIllegalArgumentExceptionIsThrown() {
-        assertNotNull(thrownException, "Expected IllegalArgumentException to be thrown.");
+        LOGGER.info("Checking expected IllegalArgumentException: "
+                + (thrownException == null ? "none" : thrownException.getMessage()));
+        assertNotNull(thrownException, "Expected IllegalArgumentException to be thrown for graph "
+                + describeGraph());
     }
 
     @And("the exception message is {string}")
     public void theExceptionMessageIs(String expectedMessage) {
         assertNotNull(thrownException, "No exception was thrown to verify.");
+        LOGGER.info("Checking exception message: expected=\"" + expectedMessage + "\", actual=\""
+                + thrownException.getMessage() + "\"");
         assertEquals(expectedMessage, thrownException.getMessage());
     }
 
     @And("the exception message contains {string}")
     public void theExceptionMessageContains(String expectedMessagePart) {
         assertNotNull(thrownException, "No exception was thrown to verify.");
+        LOGGER.info("Checking exception message contains: expected part=\"" + expectedMessagePart
+                + "\", actual=\"" + thrownException.getMessage() + "\"");
         assertTrue(thrownException.getMessage().contains(expectedMessagePart),
-                "Expected exception message to contain: " + expectedMessagePart);
+                "Expected exception message to contain \"" + expectedMessagePart
+                        + "\", actual=\"" + thrownException.getMessage() + "\"");
     }
 
     private void resetResult() {
@@ -121,6 +150,18 @@ public class KruskalAlgorithmSteps {
                 Integer.parseInt(row.get("from")),
                 Integer.parseInt(row.get("to")),
                 Integer.parseInt(row.get("weight")));
+    }
+
+    private String describeGraph() {
+        return graph.getEdges().stream().map(this::describeEdge).toList().toString();
+    }
+
+    private String describeEdges(List<Edge> edges) {
+        return edges == null ? "null" : edges.stream().map(this::describeEdge).toList().toString();
+    }
+
+    private String describeEdge(Edge edge) {
+        return edge.getFrom() + " -> " + edge.getTo() + " (" + edge.getWeight() + ")";
     }
 
     private record EdgeValue(int from, int to, int weight) {

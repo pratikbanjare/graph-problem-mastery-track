@@ -1,4 +1,4 @@
-package practice.mst;
+package chapter.topic_12;
 
 import io.cucumber.junit.platform.engine.Constants;
 import org.junit.platform.suite.api.ConfigurationParameter;
@@ -8,7 +8,7 @@ import org.junit.platform.suite.api.Suite;
 
 @Suite
 @IncludeEngines("cucumber")
-@SelectClasspathResource("features/kruskal")
-@ConfigurationParameter(key= Constants.GLUE_PROPERTY_NAME,value="practice.mst.kruskal")
-public class KrushkalBdd {
+@SelectClasspathResource("features/chapter/topic_12/kruskal_algo.feature")
+@ConfigurationParameter(key = Constants.GLUE_PROPERTY_NAME, value = "chapter.topic_12")
+public class KruskalAlgorithmBddTest {
 }

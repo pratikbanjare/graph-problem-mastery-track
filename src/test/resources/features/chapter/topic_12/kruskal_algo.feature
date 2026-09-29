@@ -36,6 +36,19 @@ Feature: Minimum spanning tree using Kruskal's algorithm
     And the edge from 1 to 3 is not selected
     And the total weight of the minimum spanning tree is 6
 
+  Scenario: Supports negative edge weights
+    Given an undirected graph with 4 vertices
+    And the graph has weighted edges
+      | from | to | weight |
+      | 1    | 2  | -2     |
+      | 2    | 3  | -1     |
+      | 1    | 3  | 4      |
+      | 3    | 4  | 3      |
+      | 2    | 4  | 5      |
+    When Kruskal's algorithm is called
+    Then the minimum spanning tree contains 3 edges
+    And the total weight of the minimum spanning tree is 0
+
   Scenario: Rejects a directed graph
     Given a directed graph with 4 vertices
     And the graph has weighted edges
