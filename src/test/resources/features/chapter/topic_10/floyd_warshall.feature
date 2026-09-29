@@ -43,3 +43,13 @@ Feature: Floyd-Warshall shortest paths
     Then the shortest distance from 1 to 1 should be 0
     And the shortest distance from 2 to 2 should be 0
     And the shortest distance from 3 to 3 should be 0
+
+  Scenario: Keep unreachable pairs at infinity
+    Given a directed graph with 4 vertices
+    And the edges:
+      | from | to | weight |
+      | 1    | 2  | 7      |
+      | 3    | 4  | 2      |
+    When I run Floyd-Warshall on the graph
+    Then the shortest distance from 1 to 4 should be Integer.MAX_VALUE
+    And the shortest distance from 4 to 1 should be Integer.MAX_VALUE
