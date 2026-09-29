@@ -10,83 +10,17 @@ import java.util.*;
 public class ShortestPath {
 
     public int[] djikstra(Graph graph, int source){
-        validateGraph(graph);
-        int[] parent = new int[graph.getVertexCount()+1];
-        return this.djikstra(graph, source, parent);
+        // write your code ehre
+        return new int[0];
     }
 
-    public int[] djikstra(Graph graph, int source, int[] parent){
-        return djikstra(graph, source, parent, -1);
-    }
 
     public List<Integer> djikstraPath(Graph graph, int source, int target){
-        validateGraph(graph);
-        if (source == target) {
-            return List.of(source);
-        }
-        int[] parent = new int[graph.getVertexCount()+1];
-        int[] distance = this.djikstra(graph, source, parent, target);
-
-        int current = target;
-        List<Integer> path =new ArrayList<>();
-        if (parent[target] == -1){
-            return path;
-        }
-        while (current !=-1){
-            path.add(current);
-            current = parent[current];
-        }
-        Collections.reverse(path);
-        return path;
+        // write your code ehre
+        return null;
     }
 
-    private int[] djikstra(Graph graph, int source, int[] parent, int target) {
-
-
-        int[] distance = new int[graph.getVertexCount()+1];
-        Arrays.fill(distance, Integer.MAX_VALUE);
-        Arrays.fill(parent, -1);
-
-        distance[source] = 0;
-
-        PriorityQueue<DistanceEntry>  pq = new PriorityQueue<>((a,b) -> Integer.compare(a.getDistance(), b.getDistance()));
-
-        pq.add(new DistanceEntry(source, distance[source]));
-
-        while (!pq.isEmpty()){
-            DistanceEntry entry = pq.poll();
-
-            // Stale Entry Check
-            if (entry.getDistance() != distance[entry.getVertex()]){
-                continue;
-            }
-
-            if (target != -1 && entry.getVertex() == target) {
-                return distance;
-            }
-
-            for (WeightedEdge neighbor : graph.getWeightedEdgesOfVertex(entry.getVertex())){
-                // Relaxation
-                int d = neighbor.getWeight() + distance[entry.getVertex()];
-                if (d < distance[neighbor.getTo()]){
-                    distance[neighbor.getTo()] = d;
-                    pq.add(new DistanceEntry(neighbor.getTo(), distance[neighbor.getTo()]));
-                    parent[neighbor.getTo()] = entry.getVertex();
-                }
-            }
-        }
-        return distance;
-    }
-
-    public void validateGraph(Graph graph)  {
-        graph.getWeightedAdjacencyList().stream().flatMap(Collection::stream).forEach(weightedEdge -> {
-            if (weightedEdge.getWeight() < 0){
-                try {
-                    throw new GraphException("Encountered negative weight when parsing Graph using Djikstra's Algorithm");
-                } catch (GraphException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
+    public void validateGraph(Graph graph) {
+        // write your code here
     }
 }
