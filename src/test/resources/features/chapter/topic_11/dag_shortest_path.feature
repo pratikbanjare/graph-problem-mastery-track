@@ -60,3 +60,14 @@ Feature: Calculate shortest paths in a directed acyclic graph
       | 2      | 4           |
       | 3      | 6           |
       | 4      | unreachable |
+
+  Scenario: Reject a graph that contains a directed cycle
+    Given a directed weighted graph with 3 vertices
+    And the following weighted edges:
+      | from | to | weight |
+      | 1    | 2  | 1      |
+      | 2    | 3  | 1      |
+      | 3    | 1  | 1      |
+    And the source vertex is 1
+    When I calculate the DAG shortest paths
+    Then a cycle error should be reported

@@ -1,5 +1,4 @@
-package practice.path;
-
+package chapter.topic_11;
 
 import io.cucumber.junit.platform.engine.Constants;
 import org.junit.platform.suite.api.ConfigurationParameter;
@@ -9,7 +8,7 @@ import org.junit.platform.suite.api.Suite;
 
 @Suite
 @IncludeEngines("cucumber")
-@SelectClasspathResource("features/dag")
-@ConfigurationParameter(key = Constants.GLUE_PROPERTY_NAME, value = "practice.path.dag")
-public class DagShortetPathBdd {
+@SelectClasspathResource("features/chapter/topic_11")
+@ConfigurationParameter(key = Constants.GLUE_PROPERTY_NAME, value = "chapter.topic_11")
+public class DagShortestPathBdd {
 }
