@@ -1,5 +1,11 @@
 Feature: Minimum spanning tree using Prim's algorithm
 
+  Scenario: Returns an empty tree for a single-vertex connected graph
+    Given an undirected graph with 1 vertices
+    When Prim's algorithm is called
+    Then the minimum spanning tree contains 0 edges
+    And the total weight of the minimum spanning tree is 0
+
   Scenario: Returns the minimum spanning tree for a connected undirected graph
     Given an undirected graph with 4 vertices
     And the graph has weighted edges
