@@ -1,6 +1,9 @@
 # graph-problem-mastery-track
 A repository to practice graph theory and problems 
 
+- For Hands on practice, swtich to `practice_graph` branch
+- For revision and qucik lookup of algorithm, stick to `main` branch.
+
 ## Supported algorithms
 - [Graph Representation](docs/algorithms/graph/problem-1-graph-representation.md)
 - [Bipartite Graph](docs/algorithms/graph/bipartite-graph.md)
